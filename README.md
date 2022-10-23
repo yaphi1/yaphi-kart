@@ -14,4 +14,4 @@ pnpm run dev
 pnpm run build
 ```
 
-The main file is `src/script.js`
+The main file is `src/main.js`
