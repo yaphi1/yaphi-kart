@@ -1,5 +1,5 @@
 
-- set speed limit on car
-- make suspension less bouncy
+- make wheels animate to rotated position
+- smooth out camera when turning at top speed
 - make curves for track
 - make textures for track

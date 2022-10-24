@@ -88,7 +88,7 @@ export default function createRamp({ app, startPoint, length, width, startHeight
     mass: pillarMass,
   });
 
-  const nextStartPointOffset = rotationRadius + 0.1;
+  const nextStartPointOffset = rotationRadius + 0.05;
   const nextTrackSettings = {
     app,
     startPoint: {

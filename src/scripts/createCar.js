@@ -32,7 +32,7 @@ export default function (app) {
   	chassisConnectionPointLocal: new CANNON.Vec3(1, 1, 0),
   	maxSuspensionTravel: carOptions.wheelMaxSuspensionTravel,
   	customSlidingRotationalSpeed: carOptions.wheelCustomSlidingRotationalSpeed,
-  	useCustomSlidingRotationalSpeed: true
+  	useCustomSlidingRotationalSpeed: true,
   };
 
 
@@ -90,8 +90,9 @@ export default function (app) {
   	}
   });
 
+  const car = { vehicle, chassis, carOptions, accelerationDirection: 0 };
 
-  return { vehicle, chassis, carOptions };
+  return car;
 };
 
 function createDebugWheel(cylinderDimensions) {
