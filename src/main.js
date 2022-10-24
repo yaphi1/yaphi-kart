@@ -14,15 +14,12 @@ import runDebug from './scripts/runDebug.js';
 import { standardMaterial, metalMaterial } from './scripts/materials.js';
 import * as lil from 'lil-gui'
 const gui = new lil.GUI();
+import createTrack from './scripts/createTrack.js';
 
 
 // ************************************************
 // App
 // ************************************************
-
-const settings = {
-	soundOn: false,
-};
 
 window.gui = gui;
 
@@ -44,6 +41,12 @@ const app = {
   canvas, world, scene, objectsToUpdate
 };
 
+
+// ************************************************
+// Track
+// ************************************************
+
+createTrack({ app });
 
 
 // ************************************************

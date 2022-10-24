@@ -4,7 +4,7 @@ import { standardMaterial } from './materials.js';
 
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 
-function createBoxVisuals({ app, width, height, depth, position, boxMaterial, customMesh }) {
+function createBoxVisuals({ app, width, height, depth, position, quaternion, boxMaterial, customMesh }) {
   let mesh = customMesh;
   if (!mesh) {
     mesh = new THREE.Mesh(boxGeometry, boxMaterial);
@@ -12,17 +12,26 @@ function createBoxVisuals({ app, width, height, depth, position, boxMaterial, cu
   }
   mesh.castShadow = true;
   mesh.position.copy(position);
+  if (quaternion) {
+    mesh.quaternion.copy(quaternion);
+  }
   app.scene.add(mesh);
 
   return mesh;
 }
 
-function createBoxPhysics({ app, width, height, depth, position, mass }) {
+function createBoxPhysics({ app, width, height, depth, position, quaternions, mass }) {
   const shape = new CANNON.Box(
     new CANNON.Vec3(width / 2, height / 2, depth / 2)
   );
   const body = new CANNON.Body({ mass: mass ?? width * height * depth, shape });
   body.position.copy(position);
+  quaternions?.forEach(quaternion => {
+    body.quaternion.setFromAxisAngle(
+      quaternion.axis,
+      quaternion.angle,
+    );
+  });
   app.world.addBody(body);
 
   return body;
@@ -34,15 +43,18 @@ export default function createBox({
   height = 1,
   depth = 1,
   position,
+  quaternions,
   mass,
   boxMaterial = standardMaterial,
   customMesh
 }) {
-  const mesh = createBoxVisuals({ app, width, height, depth, position, boxMaterial, customMesh });
-  const body = createBoxPhysics({ app, width, height, depth, position, mass });
+  const body = createBoxPhysics({ app, width, height, depth, position, quaternions, mass });
+  const mesh = createBoxVisuals({ app, width, height, depth, position, quaternion: body.quaternion, boxMaterial, customMesh });
   const box = { mesh, body };
 
-  app.objectsToUpdate.push(box);
+  if (mass > 0) {
+    app.objectsToUpdate.push(box);
+  }
 
   return box;
 };

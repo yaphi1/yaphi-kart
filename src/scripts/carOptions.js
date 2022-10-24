@@ -1,16 +1,16 @@
 export default {
-	chassisMass: 20,
+	chassisMass: 15,
 	chassisWidth: 1.6,
 	chassisHeight: 0.2,
-	chassisDepth: 2.8,
+	chassisDepth: 2.6,
 
 	axelWidth: 0.5,
 
 	wheelRadius: 0.3,
 	wheelThickness: 0.4,
-	wheelMass: 5,
+	wheelMassFront: 3,
+	wheelMassBack: 5,
 
-	// wheelHeight: 0.24,
 	wheelSuspensionStiffness: 25,
 	wheelSuspensionRestLength: 0.1,
 	wheelFrictionSlip: 5,
@@ -32,6 +32,6 @@ export default {
 	// controlsBrakeStrength: 0.45,
 
 	maxSteerVal: Math.PI * 0.15,
-	maxForce: 80,
+	maxForce: 60,
 	brakeForce: 2,
 };

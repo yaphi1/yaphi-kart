@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import * as CANNON from 'cannon-es';
 import carOptions from './carOptions.js';
 
 export default function (vehicle) {
@@ -34,6 +35,13 @@ export default function (vehicle) {
   		vehicle.setBrake(0, 2);
   		vehicle.setBrake(0, 3);
   	},
+    reset: () => {
+      // TODO: Improve this
+      const strength = 40;
+      let worldPosition = vehicle.chassisBody.position;
+      worldPosition = worldPosition.vadd(new CANNON.Vec3(0.08, 0, 0));
+      vehicle.chassisBody.applyImpulse(new CANNON.Vec3(0, strength, 0), worldPosition);
+    }
   };
 
   function handleCarControls(event){
@@ -50,6 +58,7 @@ export default function (vehicle) {
   		ArrowLeft: movements.turnLeft,
   		ArrowRight: movements.turnRight,
   		b: movements.brake,
+  		// r: movements.reset,
   	};
   	keyBindings[event.key]?.(isKeyUp);
   }

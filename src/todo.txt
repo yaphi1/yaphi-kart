@@ -1,0 +1,5 @@
+
+- set speed limit on car
+- make suspension less bouncy
+- make curves for track
+- make textures for track

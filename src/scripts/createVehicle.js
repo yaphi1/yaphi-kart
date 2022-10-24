@@ -4,6 +4,8 @@ import carOptions from './carOptions.js';
 import createBox from './createBox.js';
 import createChassis from './createChassis.js';
 import createWheel from './createWheel.js';
+import appSettings from './appSettings.js';
+import { wireframeMaterial } from './materials.js';
 
 export default function (app) {
 
@@ -53,20 +55,25 @@ export default function (app) {
   const wheelBodies = [];
   const wheelVisuals = [];
 
-  vehicle.wheelInfos.forEach(wheel => {
-  	const cylinderDimensions = [wheel.radius, wheel.radius, carOptions.wheelThickness, 40];
+  vehicle.wheelInfos.forEach((wheel, i) => {
+    const isFrontWheel = i < 2;
+    const wheelMass = isFrontWheel ? carOptions.wheelMassFront : carOptions.wheelMassBack;
+
+    const cylinderSegments = 40;
+  	const cylinderDimensions = [wheel.radius, wheel.radius, carOptions.wheelThickness, cylinderSegments];
 
   	// Physics wheels
   	const cylinderShape = new CANNON.Cylinder(...cylinderDimensions);
-  	const wheelBody = new CANNON.Body({ mass: carOptions.wheelMass });
+  	const wheelBody = new CANNON.Body({ mass: wheelMass });
   	const q = new CANNON.Quaternion();
   	q.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
   	wheelBody.addShape(cylinderShape, new CANNON.Vec3(), q);
   	wheelBodies.push(wheelBody);
 
   	// Visual wheels
-    const wheelMesh = createWheel();
+    const wheelMesh = appSettings.showDebugWheels ? createDebugWheel(cylinderDimensions) : createWheel();
   	wheelVisuals.push(wheelMesh);
+
   	app.scene.add(wheelMesh);
   });
 
@@ -86,3 +93,10 @@ export default function (app) {
 
   return { vehicle, chassis, carOptions };
 };
+
+function createDebugWheel(cylinderDimensions) {
+  const wheelGeometry = new THREE.CylinderGeometry(...cylinderDimensions);
+	const wheelMesh = new THREE.Mesh(wheelGeometry, wireframeMaterial);
+	wheelMesh.geometry.rotateZ(Math.PI/2);
+  return wheelMesh;
+}

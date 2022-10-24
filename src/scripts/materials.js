@@ -9,6 +9,10 @@ export const standardMaterial = new THREE.MeshStandardMaterial({
   roughness: 0.4,
 });
 
+export const wireframeMaterial = new THREE.MeshStandardMaterial();
+wireframeMaterial.color.set(0x000000);
+wireframeMaterial.wireframe = true;
+
 export const metalMaterial = new THREE.MeshMatcapMaterial();
 metalMaterial.matcap = matcapTexture;
 // metalMaterial.flatShading = true;
