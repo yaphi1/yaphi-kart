@@ -1,3 +1,5 @@
+import createBox from './createBox.js';
+
 export default function runDebug({ app, objectsToDebug }) {
   const { carOptions } = objectsToDebug;
 
@@ -7,6 +9,7 @@ export default function runDebug({ app, objectsToDebug }) {
   const debug = {
     createBox: () => {
       createBox({
+        app,
         width: Math.random() * 0.4 + 0.2,
         height: Math.random() * 0.4 + 0.2,
         depth: Math.random() * 0.4 + 0.2,

@@ -7,7 +7,7 @@ const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 function createBoxVisuals({ app, width, height, depth, position, boxMaterial, customMesh }) {
   let mesh = customMesh;
   if (!mesh) {
-    const mesh = new THREE.Mesh(boxGeometry, boxMaterial);
+    mesh = new THREE.Mesh(boxGeometry, boxMaterial);
     mesh.scale.set(width, height, depth);
   }
   mesh.castShadow = true;
