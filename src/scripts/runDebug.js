@@ -1,4 +1,4 @@
-export default function runDebug({ objectsToDebug }) {
+export default function runDebug({ app, objectsToDebug }) {
   const { carOptions } = objectsToDebug;
 
   gui.add(carOptions, 'maxForce').min(1).max(200);
@@ -18,11 +18,11 @@ export default function runDebug({ objectsToDebug }) {
       });
     },
     reset: () => {
-      objectsToUpdate.forEach(object => {
+      app.objectsToUpdate.forEach(object => {
         world.removeBody(object.body);
         scene.remove(object.mesh);
       });
-      objectsToUpdate.splice(0, objectsToUpdate.length);
+      app.objectsToUpdate.splice(0, objectsToUpdate.length);
     },
   };
 

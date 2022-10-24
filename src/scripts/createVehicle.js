@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
 import carOptions from './carOptions.js';
+import createBox from './createBox.js';
 import createChassis from './createChassis.js';
 import createWheel from './createWheel.js';
 
-export default function (world, scene, createBox, visualizerMaterial) {
+export default function (app) {
 
-  const chassis = createChassis(scene, createBox);
+  const chassis = createChassis(app);
 
   const vehicle = new CANNON.RaycastVehicle({
   	chassisBody: chassis.body,
@@ -47,7 +48,7 @@ export default function (world, scene, createBox, visualizerMaterial) {
   options.chassisConnectionPointLocal.set(-carOptions.axelWidth, 0, -1);
   vehicle.addWheel(options);
 
-  vehicle.addToWorld(world);
+  vehicle.addToWorld(app.world);
 
   const wheelBodies = [];
   const wheelVisuals = [];
@@ -64,17 +65,14 @@ export default function (world, scene, createBox, visualizerMaterial) {
   	wheelBodies.push(wheelBody);
 
   	// Visual wheels
-  	// const wheelGeometry = new THREE.CylinderGeometry(...cylinderDimensions);
-  	// const wheelMesh = new THREE.Mesh(wheelGeometry, visualizerMaterial);
-  	// wheelMesh.geometry.rotateZ(Math.PI/2);
     const wheelMesh = createWheel();
   	wheelVisuals.push(wheelMesh);
-  	scene.add(wheelMesh);
+  	app.scene.add(wheelMesh);
   });
 
 
   // Update wheels
-  world.addEventListener('postStep', function(){
+  app.world.addEventListener('postStep', function(){
   	for (let i = 0; i < vehicle.wheelInfos.length; i++) {
   		vehicle.updateWheelTransform(i);
   		const t = vehicle.wheelInfos[i].worldTransform;

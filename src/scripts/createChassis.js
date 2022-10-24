@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import carOptions from './carOptions.js';
+import createBox from './createBox.js';
 import standardKart from './standardKart.js';
 
-export default function createChassis(scene, createBox) {
+export default function createChassis(app) {
   const driftBox = new THREE.Group();
 
   const material = new THREE.MeshStandardMaterial();
@@ -15,12 +16,13 @@ export default function createChassis(scene, createBox) {
   );
 
   const chassis = createBox({
+    app,
   	width: carOptions.chassisWidth,
   	height: carOptions.chassisHeight,
   	depth: carOptions.chassisDepth,
   	position: { x: 0, y: 3, z: 0 },
   	mass: carOptions.chassisMass,
-    customMesh: standardKart(scene),
+    customMesh: standardKart(app.scene),
   });
 
   return chassis;
