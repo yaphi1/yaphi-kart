@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import * as CANNON from 'cannon-es';
+import appSettings from './appSettings.js';
 import {
   standardMaterial,
   metalMaterial,
@@ -6,8 +8,15 @@ import {
   rimMaterial,
 } from './materials.js';
 import { buildBarStraight } from './buildBars.js';
+import gsap from 'gsap';
 
-function createWheel({ x = 0, y = 0, z = 0, width = 0.35, thickness = 0.08, radius = 0.4 } = {}) {
+export const turnDirections = {
+  LEFT: 1,
+  CENTER: 0,
+  RIGHT: -1,
+};
+
+export function createWheel({ x = 0, y = 0, z = 0, width = 0.35, thickness = 0.08, radius = 0.4 } = {}) {
   const wheelWrapper = new THREE.Group();
   const wheel = new THREE.Group();
 
@@ -29,11 +38,6 @@ function createWheel({ x = 0, y = 0, z = 0, width = 0.35, thickness = 0.08, radi
   );
   cylinder.rotation.x = Math.PI * 0.5;
   cylinder.openEnded = true;
-
-  // const rims = new THREE.Mesh(
-  // 	new THREE.CylinderGeometry(radius, radius, width, 32),
-  // 	rimMaterial
-  // );
 
   const buildRim = () => {
     return new THREE.Mesh(
@@ -87,4 +91,54 @@ function buildAsterisk({ diameter, thickness = 0.06 }) {
   return bars;
 }
 
-export default createWheel;
+export function createDebugWheel(cylinderDimensions) {
+  const wheelGeometry = new THREE.CylinderGeometry(...cylinderDimensions);
+	const wheelMesh = new THREE.Mesh(wheelGeometry, wireframeMaterial);
+	wheelMesh.geometry.rotateZ(Math.PI/2);
+  return wheelMesh;
+};
+
+export function prepareWheelPhysics(app, car, wheel, wheelIndex) {
+  const { carOptions } = car;
+  const isFrontWheel = wheelIndex < 2;
+  const wheelMass = isFrontWheel ? carOptions.wheelMassFront : carOptions.wheelMassBack;
+  const cylinderSegments = 40;
+  const cylinderDimensions = [wheel.radius, wheel.radius, carOptions.wheelThickness, cylinderSegments];
+
+  // Physics wheels
+  const cylinderShape = new CANNON.Cylinder(...cylinderDimensions);
+  const wheelBody = new CANNON.Body({ mass: wheelMass });
+  const q = new CANNON.Quaternion();
+  q.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
+  wheelBody.addShape(cylinderShape, new CANNON.Vec3(), q);
+  car.wheelBodies.push(wheelBody);
+
+  // Visual wheels
+  const wheelMesh = appSettings.showDebugWheels ? createDebugWheel(cylinderDimensions) : createWheel();
+  car.wheelVisuals.push(wheelMesh);
+
+  app.scene.add(wheelMesh);
+};
+
+export function updateWheels({ car }) {
+  for (let i = 0; i < car.vehicle.wheelInfos.length; i++) {
+    car.vehicle.updateWheelTransform(i);
+    const t = car.vehicle.wheelInfos[i].worldTransform;
+    car.wheelBodies[i].position.copy(t.position);
+    car.wheelBodies[i].quaternion.copy(t.quaternion);
+    car.wheelVisuals[i].position.copy(t.position);
+    car.wheelVisuals[i].quaternion.copy(t.quaternion);
+  }
+};
+
+export function updateSteering({ car }) {
+  const targetSteeringValue = car.state.turnDirection * car.carOptions.maxSteerVal;
+
+  gsap.to(car.state, {
+    steeringValue: targetSteeringValue,
+    duration: 0.1,
+  });
+
+  car.vehicle.setSteeringValue(car.state.steeringValue, 0);
+  car.vehicle.setSteeringValue(car.state.steeringValue, 1);
+}

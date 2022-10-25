@@ -3,9 +3,10 @@ import * as CANNON from 'cannon-es';
 import carOptions from './carOptions.js';
 import createBox from './createBox.js';
 import createChassis from './createChassis.js';
-import createWheel from './createWheel.js';
-import appSettings from './appSettings.js';
+import { createWheel, createDebugWheel, prepareWheelPhysics } from './wheelHelpers.js';
 import { wireframeMaterial } from './materials.js';
+import { accelerationDirections } from './accelerationHelpers.js';
+import { turnDirections } from './wheelHelpers.js';
 
 export default function (app) {
 
@@ -52,52 +53,22 @@ export default function (app) {
 
   vehicle.addToWorld(app.world);
 
-  const wheelBodies = [];
-  const wheelVisuals = [];
+  const car = {
+    vehicle,
+    chassis,
+    carOptions,
+    wheelBodies: [],
+    wheelVisuals: [],
+    state: {
+      accelerationDirection: accelerationDirections.NONE,
+      turnDirection: turnDirections.CENTER,
+      steeringValue: 0,
+    }
+  };
 
   vehicle.wheelInfos.forEach((wheel, i) => {
-    const isFrontWheel = i < 2;
-    const wheelMass = isFrontWheel ? carOptions.wheelMassFront : carOptions.wheelMassBack;
-
-    const cylinderSegments = 40;
-  	const cylinderDimensions = [wheel.radius, wheel.radius, carOptions.wheelThickness, cylinderSegments];
-
-  	// Physics wheels
-  	const cylinderShape = new CANNON.Cylinder(...cylinderDimensions);
-  	const wheelBody = new CANNON.Body({ mass: wheelMass });
-  	const q = new CANNON.Quaternion();
-  	q.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
-  	wheelBody.addShape(cylinderShape, new CANNON.Vec3(), q);
-  	wheelBodies.push(wheelBody);
-
-  	// Visual wheels
-    const wheelMesh = appSettings.showDebugWheels ? createDebugWheel(cylinderDimensions) : createWheel();
-  	wheelVisuals.push(wheelMesh);
-
-  	app.scene.add(wheelMesh);
+    prepareWheelPhysics(app, car, wheel, i);
   });
-
-
-  // Update wheels
-  app.world.addEventListener('postStep', function(){
-  	for (let i = 0; i < vehicle.wheelInfos.length; i++) {
-  		vehicle.updateWheelTransform(i);
-  		const t = vehicle.wheelInfos[i].worldTransform;
-  		wheelBodies[i].position.copy(t.position);
-  		wheelBodies[i].quaternion.copy(t.quaternion);
-  		wheelVisuals[i].position.copy(t.position);
-  		wheelVisuals[i].quaternion.copy(t.quaternion);
-  	}
-  });
-
-  const car = { vehicle, chassis, carOptions, accelerationDirection: 0 };
 
   return car;
 };
-
-function createDebugWheel(cylinderDimensions) {
-  const wheelGeometry = new THREE.CylinderGeometry(...cylinderDimensions);
-	const wheelMesh = new THREE.Mesh(wheelGeometry, wireframeMaterial);
-	wheelMesh.geometry.rotateZ(Math.PI/2);
-  return wheelMesh;
-}

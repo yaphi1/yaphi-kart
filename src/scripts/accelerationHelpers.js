@@ -6,12 +6,12 @@ export const accelerationDirections = {
 const { FORWARDS, BACKWARDS, NONE } = accelerationDirections;
 
 export function hasReachedTopSpeed({ car }) {
-  return -Math.sign(car.accelerationDirection) * car.vehicle.currentVehicleSpeedKmHour >= car.carOptions.topSpeedKph;
+  return -Math.sign(car.state.accelerationDirection) * car.vehicle.currentVehicleSpeedKmHour >= car.carOptions.topSpeedKph;
 }
 
 export function applyAcceleration(car) {
   // console.log(
-  //   Math.sign(car.accelerationDirection) * car.vehicle.currentVehicleSpeedKmHour,
+  //   Math.sign(car.state.accelerationDirection) * car.vehicle.currentVehicleSpeedKmHour,
   //   car.carOptions.topSpeedKph
   // );
 
@@ -21,6 +21,6 @@ export function applyAcceleration(car) {
 
   const force = hasReachedTopSpeed({ car }) ? 0 : car.carOptions.maxForce;
 
-  car.vehicle.applyEngineForce(car.accelerationDirection * force, 2);
-  car.vehicle.applyEngineForce(car.accelerationDirection * force, 3);
+  car.vehicle.applyEngineForce(car.state.accelerationDirection * force, 2);
+  car.vehicle.applyEngineForce(car.state.accelerationDirection * force, 3);
 }

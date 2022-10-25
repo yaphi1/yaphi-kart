@@ -1,32 +1,28 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
-import carOptions from './carOptions.js';
 import { accelerationDirections } from './accelerationHelpers.js';
+import { turnDirections } from './wheelHelpers.js';
 
 export default function (car) {
   document.addEventListener('keydown', handleCarControls);
   document.addEventListener('keyup', handleCarControls);
 
+  const { carOptions } = car;
   const { FORWARDS, BACKWARDS, NONE } = accelerationDirections;
+  const { LEFT, CENTER, RIGHT } = turnDirections;
 
   const movements = {
   	goForwards: (isKeyUp) => {
-      car.accelerationDirection =  isKeyUp ? NONE : FORWARDS;
-  		// car.vehicle.applyEngineForce(isKeyUp ? 0 : -force, 2);
-  		// car.vehicle.applyEngineForce(isKeyUp ? 0 : -force, 3);
+      car.state.accelerationDirection =  isKeyUp ? NONE : FORWARDS;
   	},
   	goBackwards: (isKeyUp) => {
-      car.accelerationDirection =  isKeyUp ? NONE : BACKWARDS;
-  		// car.vehicle.applyEngineForce(isKeyUp ? 0 : force, 2);
-  		// car.vehicle.applyEngineForce(isKeyUp ? 0 : force, 3);
+      car.state.accelerationDirection =  isKeyUp ? NONE : BACKWARDS;
   	},
   	turnLeft: (isKeyUp) => {
-  		car.vehicle.setSteeringValue(isKeyUp ? 0 : carOptions.maxSteerVal, 0);
-  		car.vehicle.setSteeringValue(isKeyUp ? 0 : carOptions.maxSteerVal, 1);
+      car.state.turnDirection = isKeyUp ? CENTER : LEFT;
   	},
   	turnRight: (isKeyUp) => {
-  		car.vehicle.setSteeringValue(isKeyUp ? 0 : -carOptions.maxSteerVal, 0);
-  		car.vehicle.setSteeringValue(isKeyUp ? 0 : -carOptions.maxSteerVal, 1);
+      car.state.turnDirection = isKeyUp ? CENTER : RIGHT;
   	},
   	brake: () => {
   		car.vehicle.setBrake(carOptions.brakeForce, 0);

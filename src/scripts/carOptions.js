@@ -18,11 +18,11 @@ export default {
 	wheelDampingCompression: 1.5,
 	wheelMaxSuspensionForce: 100000,
 	wheelRollInfluence:  0.03,
-	wheelMaxSuspensionTravel: 0.3,
+	wheelMaxSuspensionTravel: 0.2,
 	wheelCustomSlidingRotationalSpeed: - 30,
 
 	maxSteerVal: Math.PI * 0.15,
 	maxForce: 150,
-	brakeForce: 2,
+	brakeForce: 3,
   topSpeedKph: 120,
 };
