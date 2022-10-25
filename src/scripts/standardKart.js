@@ -106,30 +106,7 @@ export default function (scene) {
   engineParts.pistonsRight.position.z = -0.21;
   engineParts.pistonsRight.rotation.x = 1.25;
 
-
-
-
   engine.add(...Object.values(engineParts));
-
-  function animateEngine(time, speed) {
-  	const peak = -0.14;
-  	const trough = -0.17;
-  	const amplitude = (peak - trough) / 2;
-  	const intercept = -0.14;
-  	const speedFactor = 12;
-
-  	pistons[0].position.z = amplitude * Math.sin(time * speedFactor) + intercept;
-  	pistons[3].position.z = amplitude * Math.sin(time * speedFactor) - intercept;
-
-  	pistons[1].position.z = amplitude * Math.cos(time * speedFactor) + intercept;
-  	pistons[4].position.z = amplitude * Math.cos(time * speedFactor) - intercept;
-
-  	pistons[2].position.z = amplitude * Math.sin((time + Math.PI * 0.1) * speedFactor) + intercept;
-  	pistons[5].position.z = amplitude * Math.sin((time + Math.PI * 0.1) * speedFactor) - intercept;
-
-  	// Engine vibration
-  	engine.rotation.x = 0.01 * Math.sin(time * 50);
-  }
 
 
 
@@ -268,10 +245,36 @@ export default function (scene) {
 
   const movableParts = {
     steeringWheel: steering,
+    pistons,
   };
+
+  function runIdleAnimations(elapsedTime) {
+    animateEngine(elapsedTime, engine,  pistons);
+  }
 
   return {
     mesh: standardKart,
     movableParts,
+    runIdleAnimations,
   };
 };
+
+function animateEngine(elapsedTime, engine,  pistons) {
+	const peak = -0.14;
+	const trough = -0.17;
+	const amplitude = (peak - trough) / 2;
+	const intercept = -0.14;
+	const speedFactor = 12;
+
+	pistons[0].position.z = amplitude * Math.sin(elapsedTime * speedFactor) + intercept;
+	pistons[3].position.z = amplitude * Math.sin(elapsedTime * speedFactor) - intercept;
+
+	pistons[1].position.z = amplitude * Math.cos(elapsedTime * speedFactor) + intercept;
+	pistons[4].position.z = amplitude * Math.cos(elapsedTime * speedFactor) - intercept;
+
+	pistons[2].position.z = amplitude * Math.sin((elapsedTime + Math.PI * 0.1) * speedFactor) + intercept;
+	pistons[5].position.z = amplitude * Math.sin((elapsedTime + Math.PI * 0.1) * speedFactor) - intercept;
+
+	// Engine vibration
+	engine.rotation.x = 0.01 * Math.sin(elapsedTime * 50);
+}

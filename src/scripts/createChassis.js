@@ -7,7 +7,11 @@ import { wireframeMaterial } from './materials.js';
 
 export default function createChassis(app) {
 
-  const { mesh, movableParts } = standardKart(app.scene);
+  const {
+    mesh,
+    movableParts,
+    runIdleAnimations
+  } = standardKart(app.scene);
 
   const chassis = createBox({
     app,
@@ -21,6 +25,7 @@ export default function createChassis(app) {
   });
 
   chassis.movableParts = movableParts;
+  chassis.runIdleAnimations = runIdleAnimations;
 
   return chassis;
 };

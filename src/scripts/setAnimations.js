@@ -20,6 +20,7 @@ export default function ({ app, car }) {
     applyAcceleration(car);
   	syncPhysicsWithVisuals({ app });
   	updateCamera({ app, car });
+    car.chassis.runIdleAnimations(elapsedTime);
 
   	app.renderer.render(app.scene, app.camera);
   };
