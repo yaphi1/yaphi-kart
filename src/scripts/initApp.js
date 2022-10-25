@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import Camera from './Camera.js';
+import { createCamera } from './camera.js';
 import Renderer from './Renderer.js';
 import sizes from './sizes.js';
 import setLights from './setLights.js';
@@ -19,7 +19,7 @@ export default function () {
   scene.background = new THREE.Color(0x0098db);
 
   setLights(scene);
-  const { camera, orbitControls, cameraTarget } = Camera(canvas, scene, sizes);
+  const { camera, orbitControls, cameraTarget } = createCamera(canvas, scene, sizes);
   const renderer = Renderer(canvas, scene, camera, sizes);
   setResizeListeners(sizes, camera, renderer);
 

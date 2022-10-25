@@ -22,7 +22,7 @@ export default {
 	wheelCustomSlidingRotationalSpeed: - 30,
 
 	maxSteerVal: Math.PI * 0.15,
-	maxForce: 100,
+	maxForce: 150,
 	brakeForce: 2,
   topSpeedKph: 120,
 };

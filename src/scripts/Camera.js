@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-export default function Camera(canvas, scene, sizes) {
+export function createCamera(canvas, scene, sizes) {
   const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 500);
   camera.position.set(0, 2, -7);
   camera.lookAt(new THREE.Vector3(0,8,0));
@@ -15,4 +15,20 @@ export default function Camera(canvas, scene, sizes) {
   orbitControls.target.copy(cameraTarget.position);
 
   return { camera, cameraTarget, orbitControls };
+};
+
+export function updateCamera({ app, car }) {
+  // update position
+	app.cameraTarget.position.x = car.chassis.mesh.position.x;
+	app.cameraTarget.position.y = car.chassis.mesh.position.y;
+	app.cameraTarget.position.z = car.chassis.mesh.position.z;
+
+  // update rotation
+  app.cameraTarget.quaternion.copy(car.chassis.body.quaternion);
+  app.cameraTarget.quaternion.x = 0;
+  app.cameraTarget.quaternion.z = 0;
+
+  // update orbital controls
+  app.orbitControls.target.copy(app.cameraTarget.position);
+  app.orbitControls.update();
 };

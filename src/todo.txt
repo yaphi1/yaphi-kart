@@ -1,5 +1,4 @@
 
 - make wheels animate to rotated position
-- smooth out camera when turning at top speed
 - make curves for track
 - make textures for track
