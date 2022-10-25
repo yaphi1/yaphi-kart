@@ -44,7 +44,7 @@ export default function createBox({
   depth = 1,
   position,
   quaternions,
-  mass,
+  mass = 1,
   boxMaterial = standardMaterial,
   customMesh
 }) {

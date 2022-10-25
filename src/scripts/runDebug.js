@@ -21,15 +21,7 @@ export default function runDebug({ app, car }) {
         },
       });
     },
-    reset: () => {
-      app.objectsToUpdate.forEach(object => {
-        app.world.removeBody(object.body);
-        app.scene.remove(object.mesh);
-      });
-      app.objectsToUpdate.splice(0, objectsToUpdate.length);
-    },
   };
 
   gui.add(debug, 'createBox').name('Create Box');
-  gui.add(debug, 'reset').name('Reset');
 }
