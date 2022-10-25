@@ -12,10 +12,10 @@ import {
 
 export default function (scene) {
 
-  const car = new THREE.Group();
+  const standardKart = new THREE.Group();
   const driftBox = new THREE.Group();
-  car.add(driftBox);
-  scene.add(car);
+  standardKart.add(driftBox);
+  scene.add(standardKart);
 
 
   const baseHeight = 0.2;
@@ -266,5 +266,12 @@ export default function (scene) {
   const driftBoxScale = 0.5;
   driftBox.scale.set(driftBoxScale, driftBoxScale, driftBoxScale);
 
-  return car;
+  const movableParts = {
+    steeringWheel: steering,
+  };
+
+  return {
+    mesh: standardKart,
+    movableParts,
+  };
 };

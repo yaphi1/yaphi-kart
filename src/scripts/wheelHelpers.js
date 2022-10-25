@@ -141,4 +141,6 @@ export function updateSteering({ car }) {
 
   car.vehicle.setSteeringValue(car.state.steeringValue, 0);
   car.vehicle.setSteeringValue(car.state.steeringValue, 1);
+
+  car.chassis.movableParts.steeringWheel.rotation.x = car.state.steeringValue;
 }

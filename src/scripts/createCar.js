@@ -59,6 +59,7 @@ export default function (app) {
     carOptions,
     wheelBodies: [],
     wheelVisuals: [],
+    animationsOnSteer: [],
     state: {
       accelerationDirection: accelerationDirections.NONE,
       turnDirection: turnDirections.CENTER,
