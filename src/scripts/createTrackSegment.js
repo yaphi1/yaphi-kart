@@ -1,29 +1,28 @@
 import * as CANNON from 'cannon-es';
 import createBox from './createBox.js';
 
-export default function createRamp({ app, startPoint, length, width, startHeight, endHeight, rotation = 0 }) {
+export const turnDirections = {
+  LEFT: 1,
+  CENTER: 0,
+  RIGHT: -1,
+};
 
+export function createTrackSegment({
+  app,
+  startPoint,
+  length,
+  width,
+  startHeight,
+  endHeight,
+  rotation = 0,
+  turnDirection = turnDirections.CENTER,
+}) {
   const angle = rotation + Math.PI; // make it face away intstead of towards the screen
-
   const pillarMass = 10000;
   const pillarThickness = 0.2;
-
   const rotationRadius = length / 2;
-
   const slopeHeight = Math.abs(endHeight - startHeight);
   const rampHypotenuse = Math.sqrt(Math.pow(slopeHeight, 2) + Math.pow(length, 2));
-
-  /*
-  center = (cx, xz)
-  angle = rotation
-  zStart = cos(a) * r + cz
-  xStart = sin(a) * r + cx
-
-  zEnd = cos(a + Math.PI) * r + cz
-  xEnd = sin(a + Math.PI) * r + cx
-
-  cz = zStart - cos(a) * r
-  */
 
   const rampPosition = {
     x: startPoint.x - Math.sin(angle) * rotationRadius,
@@ -54,7 +53,7 @@ export default function createRamp({ app, startPoint, length, width, startHeight
   const quaternions = {
     rampDirection: {
       axis: new CANNON.Vec3(0, 1, 0),
-      angle: angle,
+      angle,
     },
   };
 
@@ -88,17 +87,24 @@ export default function createRamp({ app, startPoint, length, width, startHeight
     mass: pillarMass,
   });
 
-  const nextStartPointOffset = rotationRadius + 0.05;
+  const turnRadius = width / 2;
+  const turnPivot = {
+    x: Math.sin(angle + Math.PI) * (rotationRadius - turnRadius) + rampPosition.x,
+    z: Math.cos(angle + Math.PI) * (rotationRadius - turnRadius) + rampPosition.z,
+  };
+
+  const nextStartPointOffset = turnRadius + 0.05;
+  const nextRotation = rotation + (turnDirection * Math.PI / 2);
   const nextTrackSettings = {
     app,
     startPoint: {
-      x: Math.sin(angle + Math.PI) * nextStartPointOffset + rampPosition.x,
-      z: Math.cos(angle + Math.PI) * nextStartPointOffset + rampPosition.z,
+      x: Math.sin(nextRotation) * nextStartPointOffset + turnPivot.x,
+      z: Math.cos(nextRotation) * nextStartPointOffset + turnPivot.z,
     },
     startHeight: endHeight,
     endHeight,
     width,
-    rotation,
+    rotation: nextRotation,
     length: 1,
   };
 

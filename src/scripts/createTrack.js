@@ -1,13 +1,15 @@
-import createTrackSegment from './createTrackSegment.js';
+import { createTrackSegment, turnDirections } from './createTrackSegment.js';
 
 export default function createTrack({ app }) {
+  const { LEFT, RIGHT } = turnDirections;
+
   let nextTrackSettings = {
     app,
     startPoint: {
       x: 0,
       z: 0,
     },
-    length: 20,
+    length: 40,
     width: 25,
     rotation: 0.2,
     startHeight: 0,
@@ -15,6 +17,18 @@ export default function createTrack({ app }) {
   };
 
   nextTrackSettings = createTrackSegment(nextTrackSettings);
+
+  nextTrackSettings = createTrackSegment({
+    ...nextTrackSettings,
+    length: 20,
+    turnDirection: LEFT,
+  });
+
+  nextTrackSettings = createTrackSegment({
+    ...nextTrackSettings,
+    length: 20,
+    turnDirection: RIGHT,
+  });
 
   nextTrackSettings = createTrackSegment({
     ...nextTrackSettings,
