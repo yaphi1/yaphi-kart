@@ -18,7 +18,7 @@ export default function createChassis(app) {
   	width: carOptions.chassisWidth,
   	height: carOptions.chassisHeight,
   	depth: carOptions.chassisDepth,
-  	position: { x: 0, y: 3, z: 0 },
+  	position: { x: 0, y: 0.2, z: 0 },
   	mass: carOptions.chassisMass,
     customMesh: appSettings.showDebugChassis ? null : mesh,
     boxMaterial: appSettings.showDebugChassis ? wireframeMaterial : null,

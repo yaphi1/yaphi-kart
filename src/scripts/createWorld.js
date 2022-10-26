@@ -12,7 +12,7 @@ export default function () {
     defaultMaterial,
     {
       friction: 0.3,
-      restitution: 0.1,
+      restitution: 0.01,
   		// contactEquationStiffness: 1000,
     }
   );

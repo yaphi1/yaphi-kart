@@ -1,5 +1,6 @@
 import * as CANNON from 'cannon-es';
 import createBox from './createBox.js';
+import { asphaltMaterial, concreteTilesMaterial } from './materials.js';
 
 export const turnDirections = {
   LEFT: 1,
@@ -16,6 +17,7 @@ export function createTrackSegment({
   endHeight,
   rotation = 0,
   turnDirection = turnDirections.CENTER,
+  trackMaterial = asphaltMaterial,
 }) {
   const angle = rotation + Math.PI; // make it face away intstead of towards the screen
   const pillarMass = 10000;
@@ -65,6 +67,7 @@ export function createTrackSegment({
     position: rampPosition,
     quaternions: Object.values(quaternions),
     mass: 100,
+    boxMaterial: trackMaterial,
   });
 
   const startPillar = createBox({
@@ -93,7 +96,7 @@ export function createTrackSegment({
     z: Math.cos(angle + Math.PI) * (rotationRadius - turnRadius) + rampPosition.z,
   };
 
-  const nextStartPointOffset = turnRadius + 0.05;
+  const nextStartPointOffset = turnRadius + 0.01;
   const nextRotation = rotation + (turnDirection * Math.PI / 2);
   const nextTrackSettings = {
     app,

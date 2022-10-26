@@ -25,10 +25,10 @@ export default function () {
 
   const world = createWorld();
   const objectsToUpdate = [];
-  createGround(world, scene);
+  const ground = createGround(world, scene);
 
   const app = {
-    canvas, world, scene, objectsToUpdate, renderer, camera, cameraTarget, orbitControls
+    canvas, world, scene, ground, objectsToUpdate, renderer, camera, cameraTarget, orbitControls
   };
 
   return app;
