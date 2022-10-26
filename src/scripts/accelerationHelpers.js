@@ -10,15 +10,6 @@ export function hasReachedTopSpeed({ car }) {
 }
 
 export function applyAcceleration(car) {
-  // console.log(
-  //   Math.sign(car.state.accelerationDirection) * car.vehicle.currentVehicleSpeedKmHour,
-  //   car.carOptions.topSpeedKph
-  // );
-
-  // if(hasReachedTopSpeed({ car })) {
-  //   console.log('hasReachedTopSpeed');
-  // }
-
   const force = hasReachedTopSpeed({ car }) ? 0 : car.carOptions.maxForce;
 
   car.vehicle.applyEngineForce(car.state.accelerationDirection * force, 2);

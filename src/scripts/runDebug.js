@@ -1,4 +1,6 @@
 import createBox from './createBox.js';
+import audio from './audio.js';
+import appSettings from './appSettings.js';
 
 export default function runDebug({ app, car }) {
   window.app = app;
@@ -26,4 +28,14 @@ export default function runDebug({ app, car }) {
   };
 
   gui.add(debug, 'createBox').name('Create Box');
+
+  gui.add(appSettings, 'soundOn').name('Sound On').onChange(value => {
+  	if (value) {
+      audio.sfx.engineSound.play();
+      audio.bgMusic.play();
+  	} else {
+      audio.sfx.engineSound.pause();
+      audio.bgMusic.pause();
+  	}
+  });
 }

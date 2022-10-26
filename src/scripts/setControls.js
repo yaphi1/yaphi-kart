@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
 import { accelerationDirections } from './accelerationHelpers.js';
 import { turnDirections } from './wheelHelpers.js';
+import audio from './audio.js';
 
 export default function (car) {
   document.addEventListener('keydown', handleCarControls);
@@ -14,9 +15,17 @@ export default function (car) {
   const movements = {
   	goForwards: (isKeyUp) => {
       car.state.accelerationDirection =  isKeyUp ? NONE : FORWARDS;
+
+      audio.applyAcceleration({
+        isAccelerating: car.state.accelerationDirection !== NONE,
+      });
   	},
   	goBackwards: (isKeyUp) => {
       car.state.accelerationDirection =  isKeyUp ? NONE : BACKWARDS;
+
+      audio.applyAcceleration({
+        isAccelerating: car.state.accelerationDirection !== NONE,
+      });
   	},
   	turnLeft: (isKeyUp) => {
       car.state.turnDirection = isKeyUp ? CENTER : LEFT;
@@ -45,8 +54,9 @@ export default function (car) {
   function handleCarControls(event){
   	const { maxSteerVal, maxForce, brakeForce } = carOptions;
   	const isKeyUp = (event.type == 'keyup');
+  	const isKeyDown = (event.type == 'keydown');
 
-  	if(!isKeyUp && event.type !== 'keydown'){ return; }
+  	if(!isKeyUp && !isKeyDown){ return; }
 
   	movements.releaseBrakes();
 
