@@ -1,10 +1,11 @@
 import * as THREE from 'three'
 import {
   matcapTexture,
-  brickTexture,
+  brickTextures,
+  brickTexturesForWideSurface,
   asphaltTextures,
-  grassTexture,
   grassTextures,
+  rubberTexture,
 } from './textures.js';
 
 export const standardMaterial = new THREE.MeshStandardMaterial({
@@ -21,10 +22,9 @@ metalMaterial.matcap = matcapTexture;
 // metalMaterial.flatShading = true;
 
 export const tireMaterial = new THREE.MeshStandardMaterial();
-// tireMaterial.color.set(0xdddddd);
 tireMaterial.color.set(0x444444);
 tireMaterial.flatShading = true;
-tireMaterial.map = brickTexture;
+tireMaterial.map = rubberTexture;
 tireMaterial.side = THREE.DoubleSide;
 
 export const rimMaterial = new THREE.MeshMatcapMaterial();
@@ -37,7 +37,7 @@ asphaltMaterial.map = asphaltTextures.colorTexture;
 asphaltMaterial.aoMap = asphaltTextures.ambientOcclusionTexture;
 asphaltMaterial.aoMapIntensity = 0.5;
 // asphaltMaterial.displacementMap = asphaltTextures.displacementTexture;
-// asphaltMaterial.displacementScale = 0.00005;
+// asphaltMaterial.displacementScale = 0.005;
 asphaltMaterial.roughnessMap = asphaltTextures.roughnessTexture;
 asphaltMaterial.normalMap = asphaltTextures.normalTexture;
 asphaltMaterial.normalScale.set(0.5, 0.5);
@@ -66,3 +66,27 @@ grassMaterial.displacementScale = 0.05;
 grassMaterial.roughnessMap = grassTextures.roughnessTexture;
 grassMaterial.normalMap = grassTextures.normalTexture;
 grassMaterial.normalScale.set(0.5, 0.5);
+
+export const brickMaterial = new THREE.MeshStandardMaterial();
+brickMaterial.metalness = 0;
+brickMaterial.roughness = 1;
+brickMaterial.map = brickTextures.colorTexture;
+brickMaterial.aoMap = brickTextures.ambientOcclusionTexture;
+brickMaterial.aoMapIntensity = 0.5;
+// brickMaterial.displacementMap = brickTextures.displacementTexture;
+// brickMaterial.displacementScale = 0.05;
+brickMaterial.roughnessMap = brickTextures.roughnessTexture;
+brickMaterial.normalMap = brickTextures.normalTexture;
+brickMaterial.normalScale.set(0.5, 0.5);
+
+export const brickMaterialForWideSurface = new THREE.MeshStandardMaterial();
+brickMaterialForWideSurface.metalness = 0;
+brickMaterialForWideSurface.roughness = 1;
+brickMaterialForWideSurface.map = brickTexturesForWideSurface.colorTexture;
+brickMaterialForWideSurface.aoMap = brickTexturesForWideSurface.ambientOcclusionTexture;
+brickMaterialForWideSurface.aoMapIntensity = 0.5;
+// brickMaterialForWideSurface.displacementMap = brickTextures.displacementTexture;
+// brickMaterialForWideSurface.displacementScale = 0.05;
+brickMaterialForWideSurface.roughnessMap = brickTexturesForWideSurface.roughnessTexture;
+brickMaterialForWideSurface.normalMap = brickTexturesForWideSurface.normalTexture;
+brickMaterialForWideSurface.normalScale.set(0.5, 0.5);

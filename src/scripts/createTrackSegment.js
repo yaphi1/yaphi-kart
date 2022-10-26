@@ -1,7 +1,12 @@
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
 import createBox from './createBox.js';
-import { asphaltMaterial, concreteTilesMaterial } from './materials.js';
+import {
+  asphaltMaterial,
+  brickMaterial,
+  brickMaterialForWideSurface,
+  concreteTilesMaterial
+} from './materials.js';
 
 export const turnDirections = {
   LEFT: 1,
@@ -75,8 +80,8 @@ export function createTrackSegment({
     hasVisuals: false,
   });
 
-  const borderThickness = 0.8;
   const pavementHeight = 0.3;
+  const borderThickness = 0.8;
   const pavementPosition = rampPosition;
   const pavementLength = rampHypotenuse - Math.abs(turnDirection) * borderThickness * 2;
   const pavement = createBox({
@@ -103,6 +108,20 @@ export function createTrackSegment({
     hasPhysics: false,
   });
 
+  const trackSupportHeight = 0.4;
+  const trackSupportPosition = rampPosition;
+  trackSupportPosition.y = rampPosition.y - trackSupportHeight / 2 - 0.05;
+  const trackSupport = createBox({
+    app,
+    width: width,
+    height: trackSupportHeight,
+    depth: rampHypotenuse,
+    position: rampPosition,
+    quaternion: quaternions.rampDirectionAndElevation,
+    hasPhysics: false,
+    boxMaterial: brickMaterialForWideSurface,
+  });
+
   const startPillar = createBox({
     app,
     width: width - 0.01,
@@ -111,6 +130,7 @@ export function createTrackSegment({
     position: startPillarPosition,
     quaternion: quaternions.rampDirection,
     mass: pillarMass,
+    boxMaterial: brickMaterial,
   });
 
   const endPillar = createBox({
@@ -121,6 +141,7 @@ export function createTrackSegment({
     position: endPillarPosition,
     quaternions: quaternions.rampDirection,
     mass: pillarMass,
+    boxMaterial: brickMaterial,
   });
 
   const turnRadius = width / 2;
