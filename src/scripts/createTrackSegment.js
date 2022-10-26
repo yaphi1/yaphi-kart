@@ -26,10 +26,11 @@ export function createTrackSegment({
   const rotationRadius = length / 2;
   const slopeHeight = Math.abs(endHeight - startHeight);
   const rampHypotenuse = Math.sqrt(Math.pow(slopeHeight, 2) + Math.pow(length, 2));
+  const elevationAngle = Math.sign(endHeight - startHeight) * Math.atan(slopeHeight / length);
 
   const rampPosition = {
     x: startPoint.x - Math.sin(angle) * rotationRadius,
-    y: Math.max(startHeight, endHeight),
+    y: slopeHeight / 2 + Math.min(startHeight, endHeight),
     z: startPoint.z - Math.cos(angle) * rotationRadius,
   };
 
@@ -54,9 +55,11 @@ export function createTrackSegment({
   }
 
   const quaternions = {
-    rampDirection: new THREE.Quaternion().setFromAxisAngle(
-      new THREE.Vector3(0, 1, 0),
-      angle
+    rampDirection: new THREE.Quaternion().setFromEuler(
+      new THREE.Euler(0, angle, 0, 'YXZ')
+    ),
+    rampDirectionAndElevation: new THREE.Quaternion().setFromEuler(
+      new THREE.Euler(elevationAngle, angle, 0, 'YXZ')
     ),
   };
 
@@ -66,7 +69,7 @@ export function createTrackSegment({
     height: 0.07,
     depth: rampHypotenuse,
     position: rampPosition,
-    quaternion: quaternions.rampDirection,
+    quaternion: quaternions.rampDirectionAndElevation,
     mass: 100,
     boxMaterial: trackMaterial,
   });
