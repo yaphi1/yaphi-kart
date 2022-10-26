@@ -16,7 +16,7 @@ export default function () {
   const canvas = document.querySelector('.webgl');
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x0098db);
+  scene.background = new THREE.Color(0x84d0f0);
 
   setLights(scene);
   const { camera, orbitControls, cameraTarget } = createCamera(canvas, scene, sizes);
