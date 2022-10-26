@@ -46,13 +46,15 @@ export default function createBox({
   quaternion,
   mass = 1,
   boxMaterial = standardMaterial,
-  customMesh
+  customMesh,
+  hasPhysics = true,
+  hasVisuals = true,
 }) {
-  const body = createBoxPhysics({ app, width, height, depth, position, quaternion, mass });
-  const mesh = createBoxVisuals({ app, width, height, depth, position, quaternion: body.quaternion, boxMaterial, customMesh });
+  const body = hasPhysics ? createBoxPhysics({ app, width, height, depth, position, quaternion, mass }) : null;
+  const mesh = hasVisuals ? createBoxVisuals({ app, width, height, depth, position, quaternion, boxMaterial, customMesh }) : null;
   const box = { mesh, body };
 
-  if (mass > 0) {
+  if (mesh && body && mass > 0) {
     app.objectsToUpdate.push(box);
   }
 

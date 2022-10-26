@@ -1,9 +1,9 @@
 
 - add artificial volume to track segments
-- make textures for sky and pillars
+- find textures for sky and pillars
 - experiment with different kart materials
 - add character model
 - add scenery and hazards
-- try adding lines or barriers to roads
+- try adding barriers to roads
 - add audio
 - finish car

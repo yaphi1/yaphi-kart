@@ -63,20 +63,49 @@ export function createTrackSegment({
     ),
   };
 
+  const rampThickness = 0.07;
   const ramp = createBox({
     app,
     width,
-    height: 0.07,
+    height: rampThickness,
     depth: rampHypotenuse,
     position: rampPosition,
     quaternion: quaternions.rampDirectionAndElevation,
     mass: 100,
+    hasVisuals: false,
+  });
+
+  const borderThickness = 0.8;
+  const pavementHeight = 0.3;
+  const pavementPosition = rampPosition;
+  const pavementLength = rampHypotenuse - Math.abs(turnDirection) * borderThickness * 2;
+  const pavement = createBox({
+    app,
+    width: width - borderThickness * 2,
+    height: rampThickness,
+    depth: pavementLength,
+    position: rampPosition,
+    quaternion: quaternions.rampDirectionAndElevation,
     boxMaterial: trackMaterial,
+    hasPhysics: false,
+  });
+
+  const borderHeight = 0.1;
+  const borderPosition = rampPosition;
+  borderPosition.y = rampPosition.y - borderHeight / 2 + 0.01;
+  const border = createBox({
+    app,
+    width: width,
+    height: borderHeight,
+    depth: rampHypotenuse,
+    position: rampPosition,
+    quaternion: quaternions.rampDirectionAndElevation,
+    hasPhysics: false,
   });
 
   const startPillar = createBox({
     app,
-    width,
+    width: width - 0.01,
     height: startHeight,
     depth: pillarThickness,
     position: startPillarPosition,
@@ -86,7 +115,7 @@ export function createTrackSegment({
 
   const endPillar = createBox({
     app,
-    width,
+    width: width - 0.01,
     height: endHeight,
     depth: pillarThickness,
     position: endPillarPosition,
