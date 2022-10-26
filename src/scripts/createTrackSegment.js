@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
 import createBox from './createBox.js';
 import { asphaltMaterial, concreteTilesMaterial } from './materials.js';
@@ -53,16 +54,16 @@ export function createTrackSegment({
   }
 
   const quaternions = {
-    rampDirection: {
-      axis: new CANNON.Vec3(0, 1, 0),
-      angle,
-    },
+    rampDirection: new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(0, 1, 0),
+      angle
+    ),
   };
 
   const ramp = createBox({
     app,
     width,
-    height: 0.05,
+    height: 0.07,
     depth: rampHypotenuse,
     position: rampPosition,
     quaternion: quaternions.rampDirection,

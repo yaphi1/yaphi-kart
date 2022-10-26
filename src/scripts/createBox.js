@@ -29,10 +29,7 @@ function createBoxPhysics({ app, width, height, depth, position, quaternion, mas
   body.position.copy(position);
 
   if (quaternion) {
-    body.quaternion.setFromAxisAngle(
-      quaternion.axis,
-      quaternion.angle,
-    );
+    body.quaternion.copy(quaternion);
   }
 
   app.world.addBody(body);

@@ -107,7 +107,12 @@ export default function createTrack({ app }) {
 
   nextTrackSettings = createTrackSegment({
     ...nextTrackSettings,
-    length: 120,
+    length: 60,
+  });
+
+  nextTrackSettings = createTrackSegment({
+    ...nextTrackSettings,
+    length: 60,
     turnDirection: RIGHT,
   });
 
