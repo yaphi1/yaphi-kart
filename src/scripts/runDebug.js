@@ -6,8 +6,8 @@ export default function runDebug({ app, car }) {
 
   gui.add(car.carOptions, 'maxForce').min(1).max(200);
   gui.add(car.carOptions, 'brakeForce').min(0.5).max(6).step(0.5);
-  gui.addColor(app.ground.material, 'color').name('Ground Color');
-  gui.addColor(app.scene, 'background').name('Sky Color');
+  // gui.addColor(app.ground.material, 'color').name('Ground Color');
+  // gui.addColor(app.scene, 'background').name('Sky Color');
 
   const debug = {
     createBox: () => {

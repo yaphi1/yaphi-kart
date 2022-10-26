@@ -4,13 +4,15 @@ const textureLoader = new THREE.TextureLoader();
 
 export const matcapTexture = textureLoader.load('https://assets.codepen.io/246719/metal_matcap.png');
 
-export const skyTexture = textureLoader.load('https://assets.codepen.io/246719/sky_tile.jpg');
+// export const skyTexture = textureLoader.load('https://assets.codepen.io/246719/sky_tile.jpg');
+// sky texture source: https://polyhaven.com/a/je_gray_park
+export const skyTexture = textureLoader.load('/textures/backgrounds/je_gray_park_8k.jpg');
 skyTexture.mapping = THREE.EquirectangularReflectionMapping;
 
-// export const grassTexture = textureLoader.load('https://assets.codepen.io/246719/Stylized_Grass_003_basecolor.jpg');
-// grassTexture.repeat.set(settings.surfaceSize / 2, settings.surfaceSize / 2);
-// grassTexture.wrapS = THREE.RepeatWrapping;
-// grassTexture.wrapT = THREE.RepeatWrapping;
+export const grassTexture = textureLoader.load('https://assets.codepen.io/246719/Stylized_Grass_003_basecolor.jpg');
+grassTexture.repeat.set(500, 500);
+grassTexture.wrapS = THREE.RepeatWrapping;
+grassTexture.wrapT = THREE.RepeatWrapping;
 
 export const brickTexture = textureLoader.load('https://assets.codepen.io/246719/Pavement_Brick_001_COLOR.jpg');
 brickTexture.repeat.set(8, 8);
@@ -27,9 +29,9 @@ export const asphaltTextures = {
   roughnessTexture: textureLoader.load('/textures/asphalt/roughness.jpg'),
 };
 Object.values(asphaltTextures).forEach(texture => {
-  texture.generateMipmaps = false;
-  texture.minFilter = THREE.NearestFilter;
-  texture.magFilter = THREE.NearestFilter;
+  // texture.generateMipmaps = false;
+  // texture.minFilter = THREE.NearestFilter;
+  // texture.magFilter = THREE.NearestFilter;
   texture.repeat.set(6, 6);
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
@@ -61,9 +63,6 @@ export const grassTextures = {
   roughnessTexture: textureLoader.load('/textures/grass/roughness.jpg'),
 };
 Object.values(grassTextures).forEach(texture => {
-  texture.generateMipmaps = false;
-  texture.minFilter = THREE.NearestFilter;
-  texture.magFilter = THREE.NearestFilter;
   texture.repeat.set(500, 500);
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;

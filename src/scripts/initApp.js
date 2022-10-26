@@ -4,6 +4,7 @@ import Renderer from './Renderer.js';
 import sizes from './sizes.js';
 import setLights from './setLights.js';
 import setResizeListeners from './setResizeListeners.js';
+import createScene from './createScene.js';
 import createGround from './createGround.js';
 import createWorld from './createWorld.js';
 import * as lil from 'lil-gui'
@@ -15,8 +16,7 @@ export default function () {
 
   const canvas = document.querySelector('.webgl');
 
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x84d0f0);
+  const scene = createScene();
 
   setLights(scene);
   const { camera, orbitControls, cameraTarget } = createCamera(canvas, scene, sizes);

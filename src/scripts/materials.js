@@ -3,6 +3,7 @@ import {
   matcapTexture,
   brickTexture,
   asphaltTextures,
+  grassTexture,
   grassTextures,
 } from './textures.js';
 
@@ -54,7 +55,7 @@ asphaltMaterial.normalScale.set(0.5, 0.5);
 // concreteTilesMaterial.normalScale.set(0.5, 0.5);
 
 export const grassMaterial = new THREE.MeshStandardMaterial();
-grassMaterial.color.set(0x00db98);
+// grassMaterial.color.set(0x00db98);
 grassMaterial.metalness = 0;
 grassMaterial.roughness = 1;
 grassMaterial.map = grassTextures.colorTexture;
