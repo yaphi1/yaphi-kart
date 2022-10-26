@@ -23,6 +23,6 @@ export default {
 
 	maxSteerVal: Math.PI * 0.15,
 	maxForce: 150,
-	brakeForce: 3,
+	brakeForce: 2.5,
   topSpeedKph: 120,
 };
