@@ -65,7 +65,7 @@ export function createTrackSegment({
     height: 0.05,
     depth: rampHypotenuse,
     position: rampPosition,
-    quaternions: Object.values(quaternions),
+    quaternion: quaternions.rampDirection,
     mass: 100,
     boxMaterial: trackMaterial,
   });
@@ -76,7 +76,7 @@ export function createTrackSegment({
     height: startHeight,
     depth: pillarThickness,
     position: startPillarPosition,
-    quaternions: [quaternions.rampDirection],
+    quaternion: quaternions.rampDirection,
     mass: pillarMass,
   });
 
@@ -86,7 +86,7 @@ export function createTrackSegment({
     height: endHeight,
     depth: pillarThickness,
     position: endPillarPosition,
-    quaternions: [quaternions.rampDirection],
+    quaternions: quaternions.rampDirection,
     mass: pillarMass,
   });
 

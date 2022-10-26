@@ -20,18 +20,21 @@ function createBoxVisuals({ app, width, height, depth, position, quaternion, box
   return mesh;
 }
 
-function createBoxPhysics({ app, width, height, depth, position, quaternions, mass }) {
+function createBoxPhysics({ app, width, height, depth, position, quaternion, mass }) {
   const shape = new CANNON.Box(
     new CANNON.Vec3(width / 2, height / 2, depth / 2)
   );
   const body = new CANNON.Body({ mass: mass ?? width * height * depth, shape });
+
   body.position.copy(position);
-  quaternions?.forEach(quaternion => {
+
+  if (quaternion) {
     body.quaternion.setFromAxisAngle(
       quaternion.axis,
       quaternion.angle,
     );
-  });
+  }
+
   app.world.addBody(body);
 
   return body;
@@ -43,12 +46,12 @@ export default function createBox({
   height = 1,
   depth = 1,
   position,
-  quaternions,
+  quaternion,
   mass = 1,
   boxMaterial = standardMaterial,
   customMesh
 }) {
-  const body = createBoxPhysics({ app, width, height, depth, position, quaternions, mass });
+  const body = createBoxPhysics({ app, width, height, depth, position, quaternion, mass });
   const mesh = createBoxVisuals({ app, width, height, depth, position, quaternion: body.quaternion, boxMaterial, customMesh });
   const box = { mesh, body };
 
