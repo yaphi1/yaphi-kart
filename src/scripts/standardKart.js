@@ -246,10 +246,12 @@ export default function (scene) {
   const movableParts = {
     steeringWheel: steering,
     pistons,
+    driftBox,
   };
 
   function runIdleAnimations(elapsedTime) {
-    animateEngine(elapsedTime, engine,  pistons);
+    animateEngine(elapsedTime, engine, pistons);
+    vibrateBody(elapsedTime, driftBox);
   }
 
   return {
@@ -259,7 +261,7 @@ export default function (scene) {
   };
 };
 
-function animateEngine(elapsedTime, engine,  pistons) {
+function animateEngine(elapsedTime, engine, pistons) {
 	const peak = -0.14;
 	const trough = -0.17;
 	const amplitude = (peak - trough) / 2;
@@ -277,4 +279,10 @@ function animateEngine(elapsedTime, engine,  pistons) {
 
 	// Engine vibration
 	engine.rotation.x = 0.01 * Math.sin(elapsedTime * 50);
+}
+
+function vibrateBody(elapsedTime, carBody) {
+  const amplitude = 0.005;
+  const frequency = 30;
+  carBody.rotation.z = amplitude * Math.sin(elapsedTime * frequency);
 }

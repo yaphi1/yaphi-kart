@@ -1,5 +1,4 @@
 
-- add audio
 - experiment with different kart materials
 - add character model
 - add scenery and hazards
