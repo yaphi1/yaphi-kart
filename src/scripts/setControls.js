@@ -13,37 +13,33 @@ export default function (car) {
   const { LEFT, CENTER, RIGHT } = turnDirections;
 
   const movements = {
-  	goForwards: (isKeyUp) => {
-      car.state.accelerationDirection =  isKeyUp ? NONE : FORWARDS;
+  	goForwards: (isKeyDown) => {
+      car.state.accelerationDirection = isKeyDown ? FORWARDS : NONE;
+      audio.applyAcceleration({ isAccelerating: isKeyDown });
+  	},
+  	goBackwards: (isKeyDown) => {
+      car.state.accelerationDirection = isKeyDown ? BACKWARDS : NONE;
+      audio.applyAcceleration({ isAccelerating: isKeyDown });
+  	},
+  	turnLeft: (isKeyDown) => {
+      car.state.turnDirection = isKeyDown ? LEFT : CENTER;
+      audio.updateScreech({ shouldPlay: shouldScreech(isKeyDown) });
+  	},
+  	turnRight: (isKeyDown) => {
+      car.state.turnDirection = isKeyDown ? RIGHT : CENTER;
+      audio.updateScreech({ shouldPlay: shouldScreech(isKeyDown) });
+  	},
+  	brake: (isKeyDown) => {
+      const force = isKeyDown ? carOptions.brakeForce : 0;
+  		car.vehicle.setBrake(force, 0);
+  		car.vehicle.setBrake(force, 1);
+  		car.vehicle.setBrake(force, 2);
+  		car.vehicle.setBrake(force, 3);
 
-      audio.applyAcceleration({
-        isAccelerating: car.state.accelerationDirection !== NONE,
+      audio.updateScreech({
+        shouldPlay: shouldScreech(isKeyDown),
+        isBraking: isKeyDown,
       });
-  	},
-  	goBackwards: (isKeyUp) => {
-      car.state.accelerationDirection =  isKeyUp ? NONE : BACKWARDS;
-
-      audio.applyAcceleration({
-        isAccelerating: car.state.accelerationDirection !== NONE,
-      });
-  	},
-  	turnLeft: (isKeyUp) => {
-      car.state.turnDirection = isKeyUp ? CENTER : LEFT;
-  	},
-  	turnRight: (isKeyUp) => {
-      car.state.turnDirection = isKeyUp ? CENTER : RIGHT;
-  	},
-  	brake: () => {
-  		car.vehicle.setBrake(carOptions.brakeForce, 0);
-  		car.vehicle.setBrake(carOptions.brakeForce, 1);
-  		car.vehicle.setBrake(carOptions.brakeForce, 2);
-  		car.vehicle.setBrake(carOptions.brakeForce, 3);
-  	},
-  	releaseBrakes: () => {
-  		car.vehicle.setBrake(0, 0);
-  		car.vehicle.setBrake(0, 1);
-  		car.vehicle.setBrake(0, 2);
-  		car.vehicle.setBrake(0, 3);
   	},
     reset: () => {
       car.vehicle.chassisBody.position.y = 3;
@@ -58,8 +54,6 @@ export default function (car) {
 
   	if(!isKeyUp && !isKeyDown){ return; }
 
-  	movements.releaseBrakes();
-
   	const keyBindings = {
   		ArrowUp: movements.goForwards,
   		ArrowDown: movements.goBackwards,
@@ -68,6 +62,15 @@ export default function (car) {
   		b: movements.brake,
   		r: movements.reset,
   	};
-  	keyBindings[event.key]?.(isKeyUp);
+  	keyBindings[event.key]?.(isKeyDown);
+  }
+
+  function shouldScreech(isKeyDown) {
+    return isKeyDown && isFastEnoughToSkid();
+  }
+
+  function isFastEnoughToSkid() {
+    const threshhold = 3;
+    return Math.abs(car.vehicle.currentVehicleSpeedKmHour) > threshhold;
   }
 };

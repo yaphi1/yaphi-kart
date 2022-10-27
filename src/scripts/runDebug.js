@@ -32,9 +32,11 @@ export default function runDebug({ app, car }) {
   gui.add(appSettings, 'soundOn').name('Sound On').onChange(value => {
   	if (value) {
       audio.sfx.engineSound.play();
+      audio.sfx.tireScreech.play();
       audio.bgMusic.play();
   	} else {
       audio.sfx.engineSound.pause();
+      audio.sfx.tireScreech.pause();
       audio.bgMusic.pause();
   	}
   });

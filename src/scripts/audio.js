@@ -18,6 +18,17 @@ audio.sfx.engineSound.addEventListener('timeupdate', function() {
 	}
 });
 
+audio.sfx.tireScreech = new Audio('/audio/tireScreech.mp3');
+audio.sfx.tireScreech.setAttribute('loop', true);
+audio.sfx.tireScreech.volume = 0;
+audio.sfx.tireScreech.addEventListener('timeupdate', function() {
+	const offset = 0.5;
+	if (this.currentTime > this.duration - offset) {
+		this.currentTime = 0;
+		this.play();
+	}
+});
+
 audio.tracks.warioStadium = new Audio('https://ia903401.us.archive.org/13/items/mario-kart-64-original-soundtrack/1.02%20Raceway%20%26%20Wario%20Stadium.flac');
 audio.tracks.warioStadium.setAttribute('loop', true);
 
@@ -38,6 +49,15 @@ audio.applyAcceleration = function ({ isAccelerating }) {
   gsap.to(audio.sfx.engineSound, {
     duration: 2,
     volume: isAccelerating ? maxVolume : minVolume,
+  });
+};
+
+audio.updateScreech = function({ shouldPlay, isBraking }) {
+  const minVolume = 0;
+  const maxVolume = isBraking ? 0.6 : 0.3;
+  gsap.to(audio.sfx.tireScreech, {
+    duration: 0.2,
+    volume: shouldPlay ? maxVolume : minVolume,
   });
 };
 
