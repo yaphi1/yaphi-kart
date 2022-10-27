@@ -1,14 +1,17 @@
 import gsap from 'gsap';
 
 const audio = {
+  masterVolume: 0.5,
   sfx: {},
   tracks: {},
 };
 
+const engineMinVolumeMultiplier = 0.1;
+const engineMaxVolumeMultiplier = 0.4;
 audio.sfx.engineSound = new Audio('https://assets.codepen.io/246719/engine-loop-1-normalized.wav');
 audio.sfx.engineSound.setAttribute('loop', true);
-audio.sfx.engineSound.minVolume = 0.1;
-audio.sfx.engineSound.maxVolume = 0.4;
+audio.sfx.engineSound.minVolume = engineMinVolumeMultiplier * audio.masterVolume;
+audio.sfx.engineSound.maxVolume = engineMaxVolumeMultiplier * audio.masterVolume;
 audio.sfx.engineSound.volume = audio.sfx.engineSound.minVolume;
 audio.sfx.engineSound.addEventListener('timeupdate', function() {
 	const offset = 0.64;
@@ -54,11 +57,28 @@ audio.applyAcceleration = function ({ isAccelerating }) {
 
 audio.updateScreech = function({ shouldPlay, isBraking }) {
   const minVolume = 0;
-  const maxVolume = isBraking ? 0.6 : 0.3;
+  const maxVolumeBraking = 0.6 * audio.masterVolume;
+  const maxVolumeTurning = 0.3 * audio.masterVolume;
+  const maxVolume = isBraking ? maxVolumeBraking : maxVolumeTurning;
   gsap.to(audio.sfx.tireScreech, {
     duration: 0.2,
     volume: shouldPlay ? maxVolume : minVolume,
   });
 };
+
+audio.setMasterVolume = function(volume) {
+  audio.masterVolume = volume;
+  const tracks = Object.values(audio.tracks);
+  tracks.forEach(track => {
+    track.volume = audio.masterVolume;
+  });
+  updateEngineVolumeRange(volume);
+}
+
+function updateEngineVolumeRange(volume) {
+  audio.sfx.engineSound.minVolume = engineMinVolumeMultiplier * audio.masterVolume;
+  audio.sfx.engineSound.maxVolume = engineMaxVolumeMultiplier * audio.masterVolume;
+  audio.sfx.engineSound.volume = audio.sfx.engineSound.minVolume;
+}
 
 export default audio;

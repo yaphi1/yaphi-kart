@@ -40,4 +40,8 @@ export default function runDebug({ app, car }) {
       audio.bgMusic.pause();
   	}
   });
+
+  gui.add(audio, 'masterVolume').name('Volume').min(0).max(1).step(0.1).onChange(value => {
+    audio.setMasterVolume(value);
+  });
 }
