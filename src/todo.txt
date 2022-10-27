@@ -1,5 +1,4 @@
 
-- check if trees animate
 - add luigi
 - add scenery and hazards
 - experiment with different kart materials

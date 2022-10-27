@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { applyAcceleration } from './accelerationHelpers.js';
 import { updateCamera } from './camera.js';
 import { updateWheels, updateSteering } from './wheelHelpers.js';
+import { animateTrees } from './addTrees.js';
 
 export default function ({ app, car }) {
 
@@ -20,6 +21,7 @@ export default function ({ app, car }) {
     applyAcceleration(car);
   	syncPhysicsWithVisuals({ app });
   	updateCamera({ app, car });
+    animateModels(deltaTime);
     car.chassis.runIdleAnimations(elapsedTime);
 
   	app.renderer.render(app.scene, app.camera);
@@ -38,4 +40,8 @@ function syncPhysicsWithVisuals({ app }) {
     object.mesh.position.copy(object.body.position);
     object.mesh.quaternion.copy(object.body.quaternion);
   });
+}
+
+function animateModels(deltaTime) {
+  animateTrees(deltaTime);
 }
