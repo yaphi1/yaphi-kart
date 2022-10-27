@@ -1,25 +1,7 @@
 
-- add luigi
-- add scenery and hazards
+- add shadows
 - experiment with different kart materials
-- add character model
+- add scenery and hazards
+- add more collision detection
 - try adding barriers to roads
 - finish car
-
-
-
-// let luigi = {};
-// const gltfLoader = new GLTFLoader();
-// gltfLoader.load(
-// 	'https://assets.codepen.io/246719/luigi_driving.gltf',
-// 	(gltf) => {
-// 		luigi = gltf.scene;
-// 		// luigi.rotation.y = Math.PI * -0.5;
-// 		// luigi.position.x = -0.246;
-// 		// luigi.position.y = -0.762;
-// 		scene.add(luigi);
-//
-// 		// gui.add(luigi.position, 'x').min(-3).max(3).name('Luigi x');
-// 		// gui.add(luigi.position, 'y').min(-3).max(3).name('Luigi y');
-// 	}
-// );

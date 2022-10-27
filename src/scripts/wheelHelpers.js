@@ -9,6 +9,7 @@ import {
 } from './materials.js';
 import { buildBarStraight } from './buildBars.js';
 import gsap from 'gsap';
+import { animateCharacterSteer } from './character.js';
 
 export const turnDirections = {
   LEFT: 1,
@@ -143,4 +144,6 @@ export function updateSteering({ car }) {
   car.vehicle.setSteeringValue(car.state.steeringValue, 1);
 
   car.chassis.movableParts.steeringWheel.rotation.x = car.state.steeringValue;
+
+  animateCharacterSteer({ car, steerStrength: car.state.steeringValue });
 }

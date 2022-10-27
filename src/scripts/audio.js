@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 
 const audio = {
-  masterVolume: 0.5,
+  masterVolume: 0.1,
   sfx: {},
   tracks: {},
 };
@@ -73,12 +73,25 @@ audio.setMasterVolume = function(volume) {
     track.volume = audio.masterVolume;
   });
   updateEngineVolumeRange(volume);
-}
+};
+audio.setMasterVolume(audio.masterVolume); // don't forget this init!
 
 function updateEngineVolumeRange(volume) {
   audio.sfx.engineSound.minVolume = engineMinVolumeMultiplier * audio.masterVolume;
   audio.sfx.engineSound.maxVolume = engineMaxVolumeMultiplier * audio.masterVolume;
   audio.sfx.engineSound.volume = audio.sfx.engineSound.minVolume;
 }
+
+audio.playAll = function() {
+  audio.sfx.engineSound.play();
+  audio.sfx.tireScreech.play();
+  audio.bgMusic.play();
+};
+
+audio.pauseAll = function() {
+  audio.sfx.engineSound.pause();
+  audio.sfx.tireScreech.pause();
+  audio.bgMusic.pause();
+};
 
 export default audio;

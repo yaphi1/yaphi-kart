@@ -7,11 +7,13 @@ import setControls from './scripts/setControls.js';
 import runDebug from './scripts/runDebug.js';
 import createTrack from './scripts/createTrack.js';
 import setAnimations from './scripts/setAnimations.js';
+import { addCharacter } from './scripts/character.js';
 
 const app = initApp();
 const car = createCar(app);
 
 createTrack({ app });
+addCharacter({ car });
 setControls(car);
 setAnimations({ app, car });
 runDebug({ app, car });

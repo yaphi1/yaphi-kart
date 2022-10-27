@@ -3,6 +3,7 @@ import { applyAcceleration } from './accelerationHelpers.js';
 import { updateCamera } from './camera.js';
 import { updateWheels, updateSteering } from './wheelHelpers.js';
 import { animateTrees } from './addTrees.js';
+import { animateCharacterIdle } from './character.js';
 
 export default function ({ app, car }) {
 
@@ -21,7 +22,7 @@ export default function ({ app, car }) {
     applyAcceleration(car);
   	syncPhysicsWithVisuals({ app });
   	updateCamera({ app, car });
-    animateModels(deltaTime);
+    animateModels({ car, elapsedTime, deltaTime });
     car.chassis.runIdleAnimations(elapsedTime);
 
   	app.renderer.render(app.scene, app.camera);
@@ -42,6 +43,7 @@ function syncPhysicsWithVisuals({ app }) {
   });
 }
 
-function animateModels(deltaTime) {
+function animateModels({ car, elapsedTime, deltaTime }) {
   animateTrees(deltaTime);
+  animateCharacterIdle({ car, elapsedTime });
 }

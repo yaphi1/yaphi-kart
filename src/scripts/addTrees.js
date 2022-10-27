@@ -1,9 +1,12 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 
 let mixers = [];
 
-export default function ({ gltfLoader, scene }) {
+export default function ({ scene }) {
+  const gltfLoader = new GLTFLoader();
+
   let treeSet = {};
   gltfLoader.load(
   	'/models/tree_wind_system/scene.gltf',
