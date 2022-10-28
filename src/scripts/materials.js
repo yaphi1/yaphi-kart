@@ -7,6 +7,7 @@ import {
   grassTextures,
   rubberTexture,
 } from './textures.js';
+import { gui } from './runDebug.js';
 
 export const standardMaterial = new THREE.MeshStandardMaterial({
   metalness: 0.3,
@@ -21,18 +22,53 @@ export const metalMaterial = new THREE.MeshMatcapMaterial();
 metalMaterial.matcap = matcapTexture;
 // metalMaterial.flatShading = true;
 
+export const carBodyMaterial = new THREE.MeshStandardMaterial({
+  metalness: 1,
+  roughness: 0.1,
+});
+carBodyMaterial.color.set(0x5d52ff);
+gui.addColor(carBodyMaterial, 'color').name('Car Color');
+// 3adb00 lightish green
+// f9dc48 muted gold
+// 66d1ff glossy cerulean
+// 5d52ff nintendo "blue" purple
+
+// gui.add(carBodyMaterial, 'metalness').min(0).max(1).step(0.1);
+// gui.add(carBodyMaterial, 'roughness').min(0).max(1).step(0.1);
+
 export const tireMaterial = new THREE.MeshStandardMaterial();
-tireMaterial.color.set(0x444444);
-tireMaterial.flatShading = true;
-tireMaterial.map = rubberTexture;
+tireMaterial.metalness = 0.6;
+tireMaterial.roughness = 1;
+tireMaterial.color.set(0x2b2b2b);
+tireMaterial.map = brickTextures.colorTexture;
+tireMaterial.aoMap = brickTextures.ambientOcclusionTexture;
+tireMaterial.aoMapIntensity = 0.5;
+tireMaterial.roughnessMap = brickTextures.roughnessTexture;
+tireMaterial.normalMap = brickTextures.normalTexture;
+tireMaterial.normalScale.set(0.5, 0.5);
 tireMaterial.side = THREE.DoubleSide;
 
-export const rimMaterial = new THREE.MeshMatcapMaterial();
-rimMaterial.matcap = matcapTexture;
+// gui.addColor(tireMaterial, 'color').name('Tire Color');
+// gui.add(tireMaterial, 'metalness').min(0).max(1).step(0.1);
+// gui.add(tireMaterial, 'roughness').min(0).max(1).step(0.1);
+
+
+
+export const rimMaterial = metalMaterial;
+
+export const engineMaterial = new THREE.MeshStandardMaterial({
+  metalness: 1,
+  roughness: 0.5,
+});
+engineMaterial.color.set(0xe3e3e3);
+// gui.addColor(engineMaterial, 'color').name('Engine Color');
+// gui.add(engineMaterial, 'metalness').min(0).max(1).step(0.1);
+// gui.add(engineMaterial, 'roughness').min(0).max(1).step(0.1);
 
 export const asphaltMaterial = new THREE.MeshStandardMaterial();
-asphaltMaterial.metalness = 0;
-asphaltMaterial.roughness = 1;
+asphaltMaterial.color.set(0xa4a1ba);
+asphaltMaterial.metalness = 0.3;
+asphaltMaterial.roughness = 0.8;
 asphaltMaterial.map = asphaltTextures.colorTexture;
 asphaltMaterial.aoMap = asphaltTextures.ambientOcclusionTexture;
 asphaltMaterial.aoMapIntensity = 0.5;
@@ -41,6 +77,8 @@ asphaltMaterial.aoMapIntensity = 0.5;
 asphaltMaterial.roughnessMap = asphaltTextures.roughnessTexture;
 asphaltMaterial.normalMap = asphaltTextures.normalTexture;
 asphaltMaterial.normalScale.set(0.5, 0.5);
+
+gui.addColor(asphaltMaterial, 'color').name('Street Color');
 
 // export const concreteTilesMaterial = new THREE.MeshStandardMaterial();
 // concreteTilesMaterial.metalness = 0;

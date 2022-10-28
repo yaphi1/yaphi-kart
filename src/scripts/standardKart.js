@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import {
   standardMaterial,
-  metalMaterial,
+  carBodyMaterial,
   tireMaterial,
   rimMaterial,
+  engineMaterial,
 } from './materials.js';
 import {
   buildBarCurved,
@@ -22,20 +23,20 @@ export default function (scene) {
 
   const bodyCenter = new THREE.Mesh(
   	new THREE.CylinderGeometry( 0.8, 1, baseHeight, 30 ),
-  	metalMaterial
+  	carBodyMaterial
   );
   bodyCenter.scale.x = 1.5;
 
 
   const bodyFront = new THREE.Mesh(
   	new THREE.BoxGeometry( 1, baseHeight, 0.6 ),
-  	metalMaterial
+  	carBodyMaterial
   );
   bodyFront.position.x = -1.5;
 
   const bodyBack = new THREE.Mesh(
   	new THREE.BoxGeometry( 1, baseHeight, 0.6 ),
-  	metalMaterial
+  	carBodyMaterial
   );
   bodyBack.position.x = 1.5;
 
@@ -77,7 +78,7 @@ export default function (scene) {
   const engine = new THREE.Group();
   const engineParts = {};
 
-  engineParts.base = buildBarStraight({ x: 1.16, y: 0.27, z: 0, length: 1, rotations: 0.25, thickness: 0.3, faces: 6 });
+  engineParts.base = buildBarStraight({ x: 1.16, y: 0.27, z: 0, length: 1, rotations: 0.25, thickness: 0.3, faces: 6, material: engineMaterial });
   engineParts.base.scale.x = 1.5;
   engineParts.base.scale.z = 0.7;
 
@@ -86,12 +87,12 @@ export default function (scene) {
   engineParts.pistonsRight = new THREE.Group();
 
   const pistons = [
-  	buildBarStraight({ x: 0, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12 }),
-  	buildBarStraight({ x: -0.29, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12 }),
-  	buildBarStraight({ x: -0.58, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12 }),
-  	buildBarStraight({ x: 0, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12 }),
-  	buildBarStraight({ x: -0.29, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12 }),
-  	buildBarStraight({ x: -0.58, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12 }),
+  	buildBarStraight({ x: 0, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12, material: engineMaterial }),
+  	buildBarStraight({ x: -0.29, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12, material: engineMaterial }),
+  	buildBarStraight({ x: -0.58, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12, material: engineMaterial }),
+  	buildBarStraight({ x: 0, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12, material: engineMaterial }),
+  	buildBarStraight({ x: -0.29, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12, material: engineMaterial }),
+  	buildBarStraight({ x: -0.58, y: 0, z: 0, length: 0.2, rotations: 0.5, thickness: 0.12, material: engineMaterial }),
   ];
 
   engineParts.pistonsLeft.add(...pistons.slice(0, 3));
@@ -151,7 +152,7 @@ export default function (scene) {
 
   hoodParts.body = new THREE.Mesh(
   	new THREE.CylinderGeometry(0.46, 0.2, 1.5, 60),
-  	metalMaterial
+  	carBodyMaterial
   );
   hoodParts.body.rotation.z = -1.35;
   hoodParts.body.scale.x = 0.714;
@@ -175,7 +176,7 @@ export default function (scene) {
 
   steeringParts.wheel = new THREE.Mesh(
   	new THREE.TorusGeometry(0.25, 0.07, 10, 30),
-  	metalMaterial
+  	carBodyMaterial
   );
   steeringParts.wheel.rotation.y = Math.PI * 0.5;
 
@@ -218,7 +219,7 @@ export default function (scene) {
   function buildAxel(offset) {
   	const axel = new THREE.Mesh(
   		new THREE.CylinderGeometry( 0.04, 0.04, 2, 10 ),
-  		metalMaterial
+  		carBodyMaterial
   	);
   	axel.position.x = offset;
   	axel.rotation.x = Math.PI * 0.5;

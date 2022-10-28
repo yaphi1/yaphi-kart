@@ -7,9 +7,8 @@ import setResizeListeners from './setResizeListeners.js';
 import createScene from './createScene.js';
 import createGround from './createGround.js';
 import createWorld from './createWorld.js';
-import * as lil from 'lil-gui'
-
-const gui = new lil.GUI();
+import * as lil from 'lil-gui';
+import { gui } from './runDebug.js';
 
 export default function () {
   window.gui = gui;
@@ -28,7 +27,7 @@ export default function () {
   const ground = createGround(world, scene);
 
   const app = {
-    canvas, world, scene, ground, objectsToUpdate, renderer, camera, cameraTarget, orbitControls
+    canvas, world, scene, ground, objectsToUpdate, renderer, camera, cameraTarget, orbitControls, gui
   };
 
   return app;

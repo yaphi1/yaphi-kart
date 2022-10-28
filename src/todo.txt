@@ -1,6 +1,5 @@
 
 - add shadows
-- experiment with different kart materials
 - add scenery and hazards
 - add more collision detection
 - try adding barriers to roads

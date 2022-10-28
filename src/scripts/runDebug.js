@@ -1,13 +1,16 @@
 import createBox from './createBox.js';
 import audio from './audio.js';
 import appSettings from './appSettings.js';
+import * as lil from 'lil-gui'
+
+export const gui = new lil.GUI();
 
 export default function runDebug({ app, car }) {
   window.app = app;
   window.car = car;
 
-  gui.add(car.carOptions, 'maxForce').min(1).max(200);
-  gui.add(car.carOptions, 'brakeForce').min(0.5).max(6).step(0.5);
+  // gui.add(car.carOptions, 'maxForce').min(1).max(200);
+  // gui.add(car.carOptions, 'brakeForce').min(0.5).max(6).step(0.5);
   // gui.addColor(app.ground.material, 'color').name('Ground Color');
   // gui.addColor(app.scene, 'background').name('Sky Color');
 
@@ -27,7 +30,7 @@ export default function runDebug({ app, car }) {
     },
   };
 
-  gui.add(debug, 'createBox').name('Create Box');
+  // gui.add(debug, 'createBox').name('Create Box');
 
   gui.add(appSettings, 'soundOn').name('Sound On').onChange(value => {
   	if (value) {

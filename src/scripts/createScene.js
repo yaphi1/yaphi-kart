@@ -6,6 +6,7 @@ export default function () {
   const scene = new THREE.Scene();
   // scene.background = new THREE.Color(0x84d0f0);
   scene.background = skyTexture;
+  scene.environment = skyTexture;
 
   addTrees({ scene });
 

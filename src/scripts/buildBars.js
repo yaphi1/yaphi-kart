@@ -1,15 +1,10 @@
 import * as THREE from 'three';
-import {
-  standardMaterial,
-  metalMaterial,
-  tireMaterial,
-  rimMaterial,
-} from './materials.js';
+import { carBodyMaterial } from './materials.js';
 
-export function buildBarCurved({ x = 0, y = 0, z = 0, r = 0.55, thickness = 0.08, rotations = 0.25, segments = 3, arcSweep = 0.5 }) {
+export function buildBarCurved({ x = 0, y = 0, z = 0, r = 0.55, thickness = 0.08, rotations = 0.25, segments = 3, arcSweep = 0.5, material = carBodyMaterial }) {
   const bar = new THREE.Mesh(
     new THREE.TorusGeometry( r, thickness, 10, segments, Math.PI * 2 * arcSweep ),
-    metalMaterial
+    material
   );
   bar.position.x = x;
   bar.position.y = y;
@@ -19,10 +14,10 @@ export function buildBarCurved({ x = 0, y = 0, z = 0, r = 0.55, thickness = 0.08
   return bar;
 };
 
-export function buildBarStraight({ x = 0, y = 0, z = 0, thickness = 0.08, length = 1, rotations = 0, faces = 10}) {
+export function buildBarStraight({ x = 0, y = 0, z = 0, thickness = 0.08, length = 1, rotations = 0, faces = 10, material = carBodyMaterial }) {
   const bar = new THREE.Mesh(
     new THREE.CylinderGeometry( thickness, thickness, length, faces ),
-    metalMaterial
+    material
   );
   bar.position.x = x;
   bar.position.y = y;

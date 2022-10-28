@@ -76,16 +76,16 @@ export function createWheel({ x = 0, y = 0, z = 0, width = 0.35, thickness = 0.0
   return wheelWrapper;
 }
 
-function buildAsterisk({ diameter, thickness = 0.06 }) {
+function buildAsterisk({ diameter, thickness = 0.06, material = rimMaterial }) {
   const bars = new THREE.Group();
 
-  const centerBar = buildBarStraight({ x: 0, y: 0, z: 0, length: diameter, rotations: 0, thickness });
+  const centerBar = buildBarStraight({ x: 0, y: 0, z: 0, length: diameter, rotations: 0, thickness, material });
   centerBar.rotation.x = 0;
 
-  const leftBar = buildBarStraight({ x: 0, y: 0, z: 0, length: diameter, rotations: 0, thickness });
+  const leftBar = buildBarStraight({ x: 0, y: 0, z: 0, length: diameter, rotations: 0, thickness, material });
   leftBar.rotation.x = Math.PI * 1/3;
 
-  const rightBar = buildBarStraight({ x: 0, y: 0, z: 0, length: diameter, rotations: 0, thickness });
+  const rightBar = buildBarStraight({ x: 0, y: 0, z: 0, length: diameter, rotations: 0, thickness, material });
   rightBar.rotation.x = Math.PI * -1/3;
 
   bars.add(centerBar, leftBar, rightBar);
