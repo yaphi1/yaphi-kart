@@ -17,6 +17,9 @@ export default function () {
 
   const scene = createScene();
 
+  const fog = new THREE.Fog('#6C7468', 1, 350);
+  scene.fog = fog;
+
   setLights(scene);
   const { camera, orbitControls, cameraTarget } = createCamera(canvas, scene, sizes);
   const renderer = Renderer(canvas, scene, camera, sizes);
