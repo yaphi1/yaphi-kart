@@ -17,7 +17,6 @@ audio.sfx.engineSound.addEventListener('timeupdate', function() {
 	const offset = 0.64;
 	if (this.currentTime > this.duration - offset) {
 		this.currentTime = 0.1;
-		this.play();
 	}
 });
 
@@ -28,7 +27,6 @@ audio.sfx.tireScreech.addEventListener('timeupdate', function() {
 	const offset = 0.5;
 	if (this.currentTime > this.duration - offset) {
 		this.currentTime = 0;
-		this.play();
 	}
 });
 
@@ -41,7 +39,6 @@ audio.tracks.toadsTurnpike.addEventListener('timeupdate', function() {
 	const offset = 10.4;
 	if (this.currentTime > this.duration - offset) {
 		this.currentTime = 14.05;
-		this.play();
 	}
 });
 
