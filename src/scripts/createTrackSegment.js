@@ -26,7 +26,6 @@ export function createTrackSegment({
   trackMaterial = asphaltMaterial,
 }) {
   const angle = rotation + Math.PI; // make it face away intstead of towards the screen
-  const pillarMass = 10000;
   const pillarThickness = 0.2;
   const rotationRadius = length / 2;
   const slopeHeight = Math.abs(endHeight - startHeight);
@@ -76,7 +75,7 @@ export function createTrackSegment({
     depth: rampHypotenuse,
     position: rampPosition,
     quaternion: quaternions.rampDirectionAndElevation,
-    mass: 100,
+    mass: 0,
     hasVisuals: false,
   });
 
@@ -129,7 +128,7 @@ export function createTrackSegment({
     depth: pillarThickness,
     position: startPillarPosition,
     quaternion: quaternions.rampDirection,
-    mass: pillarMass,
+    mass: 0,
     boxMaterial: brickMaterial,
   });
 
@@ -140,7 +139,7 @@ export function createTrackSegment({
     depth: pillarThickness,
     position: endPillarPosition,
     quaternions: quaternions.rampDirection,
-    mass: pillarMass,
+    mass: 0,
     boxMaterial: brickMaterial,
   });
 
@@ -150,13 +149,12 @@ export function createTrackSegment({
     z: Math.cos(angle + Math.PI) * (rotationRadius - turnRadius) + rampPosition.z,
   };
 
-  const nextStartPointOffset = turnRadius + 0.01;
   const nextRotation = rotation + (turnDirection * Math.PI / 2);
   const nextTrackSettings = {
     app,
     startPoint: {
-      x: Math.sin(nextRotation) * nextStartPointOffset + turnPivot.x,
-      z: Math.cos(nextRotation) * nextStartPointOffset + turnPivot.z,
+      x: Math.sin(nextRotation) * turnRadius + turnPivot.x,
+      z: Math.cos(nextRotation) * turnRadius + turnPivot.z,
     },
     startHeight: endHeight,
     endHeight,

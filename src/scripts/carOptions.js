@@ -1,28 +1,30 @@
-export default {
-	chassisMass: 15,
-	chassisWidth: 1.6,
-	chassisHeight: 0.2,
-	chassisDepth: 2.6,
+const carOptions = {
+	chassisMass: 35,
+	chassisWidth: 1.4,
+	chassisHeight: 0.1,
+	chassisDepth: 1.7,
 
-	axelWidth: 0.5,
+	axleWidth: 0.5,
 
-	wheelRadius: 0.3,
-	wheelThickness: 0.4,
-	wheelMassFront: 3,
+	wheelRadius: 0.25,
+	wheelThickness: 0.3,
+	wheelMassFront: 15,
 	wheelMassBack: 5,
 
-	wheelSuspensionStiffness: 25,
-	wheelSuspensionRestLength: 0.07,
-	wheelFrictionSlip: 5,
-	wheelDampingRelaxation: 1.8,
-	wheelDampingCompression: 1.5,
+	wheelSuspensionStiffness: 35,
+	wheelSuspensionRestLength: 0.17, // chassis elevation
+	wheelFrictionSlip: 8,
+	wheelDampingRelaxation: 7.5,
+	wheelDampingCompression: 7.5,
 	wheelMaxSuspensionForce: 100000,
-	wheelRollInfluence:  0.03,
-	wheelMaxSuspensionTravel: 0.2,
-	wheelCustomSlidingRotationalSpeed: - 30,
+	wheelRollInfluence: 0.03,
+	wheelMaxSuspensionTravel: 0.3,
+	wheelCustomSlidingRotationalSpeed: -30,
 
 	maxSteerVal: Math.PI * 0.15,
-	maxForce: 150,
-	brakeForce: 2.5,
+	maxForce: 300,
+	brakeForce: 5.5,
   topSpeedKph: 120,
 };
+
+export default carOptions;

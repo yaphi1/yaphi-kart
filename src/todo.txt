@@ -1,6 +1,10 @@
 
+- simplify track editor
+  - group track pieces into one body for easier position & rotation
+
 - add shadows
 - add scenery and hazards
 - add more collision detection
 - try adding barriers to roads
 - finish car
+- add instructions, sound controls, and credits

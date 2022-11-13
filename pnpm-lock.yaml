@@ -5,6 +5,7 @@ specifiers:
   '@babel/preset-env': ^7.17.10
   babel-loader: ^8.2.5
   cannon-es: ^0.20.0
+  cannon-es-debugger: ^1.0.0
   clean-webpack-plugin: ^4.0.0
   copy-webpack-plugin: ^10.2.4
   css-loader: ^6.7.1
@@ -28,6 +29,7 @@ dependencies:
   '@babel/preset-env': 7.19.4_@babel+core@7.19.6
   babel-loader: 8.2.5_6zc4kxld457avlfyhj3lzsljlm
   cannon-es: 0.20.0
+  cannon-es-debugger: 1.0.0_fadrwwole32oxk2oytxcwnow7m
   clean-webpack-plugin: 4.0.0_webpack@5.74.0
   copy-webpack-plugin: 10.2.4_webpack@5.74.0
   css-loader: 6.7.1_webpack@5.74.0
@@ -1824,6 +1826,20 @@ packages:
 
   /caniuse-lite/1.0.30001423:
     resolution: {integrity: sha512-09iwWGOlifvE1XuHokFMP7eR38a0JnajoyL3/i87c8ZjRWRrdKo1fqjNfugfBD0UDBIOz0U+jtNhJ0EPm1VleQ==}
+    dev: false
+
+  /cannon-es-debugger/1.0.0_fadrwwole32oxk2oytxcwnow7m:
+    resolution: {integrity: sha512-sE9lDOBAYFKlh+0w+cvWKwUhJef8HYnUSVPWPL0jD15MAuVRQKno4QYZSGxgOoJkMR3mQqxL4bxys2b3RSWH8g==}
+    peerDependencies:
+      cannon-es: 0.x
+      three: 0.x
+      typescript: '>=3.8'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      cannon-es: 0.20.0
+      three: 0.140.2
     dev: false
 
   /cannon-es/0.20.0:
