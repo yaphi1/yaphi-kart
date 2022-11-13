@@ -36,19 +36,16 @@ export default function (app) {
   	useCustomSlidingRotationalSpeed: true,
   };
 
-
-  // Wheel-adding order matters!
-
-  // Back wheels
-  options.chassisConnectionPointLocal.set(carOptions.axelWidth, 0, 1);
+  // Front wheels (left, then right)
+  options.chassisConnectionPointLocal.set(carOptions.axleWidth, 0, 0.9);
   vehicle.addWheel(options);
-  options.chassisConnectionPointLocal.set(-carOptions.axelWidth, 0, 1);
+  options.chassisConnectionPointLocal.set(-carOptions.axleWidth, 0, 0.9);
   vehicle.addWheel(options);
 
-  // Front wheels
-  options.chassisConnectionPointLocal.set(carOptions.axelWidth, 0, -1);
+  // Back wheels (left, then right)
+  options.chassisConnectionPointLocal.set(carOptions.axleWidth, 0, -0.9);
   vehicle.addWheel(options);
-  options.chassisConnectionPointLocal.set(-carOptions.axelWidth, 0, -1);
+  options.chassisConnectionPointLocal.set(-carOptions.axleWidth, 0, -0.9);
   vehicle.addWheel(options);
 
   vehicle.addToWorld(app.world);

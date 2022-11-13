@@ -6,6 +6,7 @@ import {
   metalMaterial,
   tireMaterial,
   rimMaterial,
+  wireframeMaterial,
 } from './materials.js';
 import { buildBarStraight } from './buildBars.js';
 import gsap from 'gsap';
@@ -110,7 +111,7 @@ export function prepareWheelPhysics(app, car, wheel, wheelIndex) {
   const cylinderShape = new CANNON.Cylinder(...cylinderDimensions);
   const wheelBody = new CANNON.Body({ mass: wheelMass });
   const q = new CANNON.Quaternion();
-  q.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
+  q.setFromAxisAngle(new CANNON.Vec3(0, 0, 1), Math.PI / 2);
   wheelBody.addShape(cylinderShape, new CANNON.Vec3(), q);
   car.wheelBodies.push(wheelBody);
 

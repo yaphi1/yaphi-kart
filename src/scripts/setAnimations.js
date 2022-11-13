@@ -4,8 +4,14 @@ import { updateCamera } from './camera.js';
 import { updateWheels, updateSteering } from './wheelHelpers.js';
 import { animateTrees } from './addTrees.js';
 import { animateCharacterIdle } from './character.js';
+import appSettings from './appSettings.js';
+import CannonDebugger from 'cannon-es-debugger';
 
 export default function ({ app, car }) {
+
+  const cannonDebugger = new CannonDebugger(app.scene, app.world, {
+    // options...
+  });
 
   const clock = new THREE.Clock();
   let oldElapsedTime = 0;
@@ -18,6 +24,9 @@ export default function ({ app, car }) {
   	oldElapsedTime = elapsedTime;
 
   	app.world.step(1/60, deltaTime, 3);
+    if (appSettings.showPhysicsDebugger) {
+      cannonDebugger.update();
+    }
 
     applyAcceleration(car);
   	syncPhysicsWithVisuals({ app });

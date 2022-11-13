@@ -16,6 +16,7 @@ export default function (scene) {
   const standardKart = new THREE.Group();
   const driftBox = new THREE.Group();
   standardKart.add(driftBox);
+  driftBox.position.y = -0.1;
   scene.add(standardKart);
 
 
@@ -176,7 +177,7 @@ export default function (scene) {
 
   steeringParts.wheel = new THREE.Mesh(
   	new THREE.TorusGeometry(0.25, 0.07, 10, 30),
-  	carBodyMaterial
+  	tireMaterial
   );
   steeringParts.wheel.rotation.y = Math.PI * 0.5;
 
@@ -214,25 +215,25 @@ export default function (scene) {
 
 
   // ************************************************
-  // Axels
+  // Axles
   // ************************************************
-  function buildAxel(offset) {
-  	const axel = new THREE.Mesh(
+  function buildAxle(offset) {
+  	const axle = new THREE.Mesh(
   		new THREE.CylinderGeometry( 0.04, 0.04, 2, 10 ),
   		carBodyMaterial
   	);
-  	axel.position.x = offset;
-  	axel.rotation.x = Math.PI * 0.5;
-  	return axel;
+  	axle.position.x = offset;
+  	axle.rotation.x = Math.PI * 0.5;
+  	return axle;
   }
 
-  const axelFront = buildAxel(-1.75);
-  const axelBack = buildAxel(1.75);
-  const axels = [axelFront, axelBack];
+  const axleFront = buildAxle(-1.75);
+  const axleBack = buildAxle(1.75);
+  const axles = [axleFront, axleBack];
 
 
   driftBox.add(...carBodyParts,
-    ...axels,
+    ...axles,
     ...barMeshes,
     engine,
     seat,

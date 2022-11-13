@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import * as CANNON from 'cannon-es';
 import carOptions from './carOptions.js';
 import createBox from './createBox.js';
 import standardKart from './standardKart.js';
@@ -22,7 +23,11 @@ export default function createChassis(app) {
   	mass: carOptions.chassisMass,
     customMesh: appSettings.showDebugChassis ? null : mesh,
     boxMaterial: appSettings.showDebugChassis ? wireframeMaterial : null,
+    shouldAddToWorld: false,
   });
+
+  // prevents excessive rotation
+  chassis.body.angularDamping = 0.5;
 
   chassis.movableParts = movableParts;
   chassis.runIdleAnimations = runIdleAnimations;

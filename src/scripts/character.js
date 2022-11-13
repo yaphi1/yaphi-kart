@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import * as CANNON from 'cannon-es';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import gsap from 'gsap';
 
@@ -17,13 +18,15 @@ function loadLuigi({ car }) {
   	(gltf) => {
   		character = gltf.scene;
       const scale = 0.5;
+      const verticalOffset = -0.1;
       character.scale.set(scale, scale, scale);
-      character.position.y = -0.39;
+      character.position.y = -0.39 + verticalOffset;
   		character.position.z = 0.12;
       character.idleAnimation = animateLuigiIdle;
       character.steeringAnimation = animateLuigiSteer;
 
   		car.chassis.mesh.add(character);
+      addCharacterPhysicsToChassis({ car });
       car.character = character;
 
       // gui.add(character.position, 'y').min(-3).max(3).name('Character y');
@@ -73,4 +76,16 @@ export function animateCharacterSteer({ car, steerStrength }) {
     character: car.character,
     steerStrength
   });
+}
+
+function addCharacterPhysicsToChassis({ car }) {
+  const { chassisWidth } = car.carOptions;
+  const characterShape = new CANNON.Box(
+    new CANNON.Vec3(
+      chassisWidth * 0.5 / 2,
+      chassisWidth * 0.65 / 2,
+      chassisWidth * 0.56 / 2,
+    )
+  );
+  car.chassis.body.addShape(characterShape, new CANNON.Vec3(0, 0.5, 0.1));
 }
