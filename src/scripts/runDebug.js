@@ -1,7 +1,10 @@
 import createBox from './createBox.js';
 import audio from './audio.js';
 import appSettings from './appSettings.js';
-import * as lil from 'lil-gui'
+import * as lil from 'lil-gui';
+
+
+import * as THREE from 'three';
 
 export const gui = new lil.GUI();
 
@@ -13,6 +16,10 @@ export default function runDebug({ app, car }) {
   // gui.add(car.carOptions, 'brakeForce').min(0.5).max(6).step(0.5);
   // gui.addColor(app.ground.material, 'color').name('Ground Color');
   // gui.addColor(app.scene, 'background').name('Sky Color');
+
+  // gui.add(app.camera.position, 'y').min(0).max(6).step(0.1).name('camera y');
+  // gui.add(app.camera.position, 'z').min(-20).max(0).step(0.1).name('camera z');
+  // gui.add(app.camera.rotation, 'x').min(-3.1).max(-2.7).name('camera angle');
 
   const debug = {
     createBox: () => {

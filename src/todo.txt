@@ -1,4 +1,5 @@
 
+- fix jitter on brakes
 - simplify track editor
   - group track pieces into one body for easier position & rotation
 
@@ -8,3 +9,4 @@
 - try adding barriers to roads
 - finish car
 - add instructions, sound controls, and credits
+- add linting
