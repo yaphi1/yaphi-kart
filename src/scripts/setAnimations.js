@@ -40,7 +40,7 @@ export default function ({ app, car }) {
 
   app.world.addEventListener('postStep', function() {
   	updateWheels({ car });
-    updateSteering({ car });
+    updateSteering({ app, car });
   });
 
 };

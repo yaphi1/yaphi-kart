@@ -11,6 +11,7 @@ import {
 import { buildBarStraight } from './buildBars.js';
 import gsap from 'gsap';
 import { animateCharacterSteer } from './character.js';
+import { animateCameraSteer } from './camera.js';
 
 export const turnDirections = {
   LEFT: 1,
@@ -133,7 +134,7 @@ export function updateWheels({ car }) {
   }
 };
 
-export function updateSteering({ car }) {
+export function updateSteering({ app, car }) {
   const targetSteeringValue = car.state.turnDirection * car.carOptions.maxSteerVal;
 
   gsap.to(car.state, {
@@ -147,9 +148,5 @@ export function updateSteering({ car }) {
   car.chassis.movableParts.steeringWheel.rotation.x = car.state.steeringValue;
 
   animateCharacterSteer({ car, steerStrength: car.state.steeringValue });
-
-  gsap.to(app.cameraTarget.children[0].position, {
-    x: car.state.turnDirection * 0.5,
-    duration: 3,
-  });
+  animateCameraSteer({ app, car });
 }
