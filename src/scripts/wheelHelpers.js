@@ -147,4 +147,9 @@ export function updateSteering({ car }) {
   car.chassis.movableParts.steeringWheel.rotation.x = car.state.steeringValue;
 
   animateCharacterSteer({ car, steerStrength: car.state.steeringValue });
+
+  gsap.to(app.cameraTarget.children[0].position, {
+    x: car.state.turnDirection * 0.5,
+    duration: 3,
+  });
 }
