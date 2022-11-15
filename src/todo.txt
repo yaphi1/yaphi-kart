@@ -1,5 +1,9 @@
 
+- fix jitter on turns
+  - probably due to alternating wheel sliding
+- smooth out acceleration and brakes
 - fix jitter on brakes
+
 - simplify track editor
   - group track pieces into one body for easier position & rotation
 
@@ -10,3 +14,14 @@
 - finish car
 - add instructions, sound controls, and credits
 - add linting
+
+
+// touch grass
+if car.vehicle.wheelInfos[0].raycastResult.body.id === 0, that's the grass
+
+// rotateTowards
+const targetQuaternion = new THREE.Quaternion();
+targetQuaternion.copy(car.chassis.body.quaternion);
+targetQuaternion.x = 0;
+targetQuaternion.z = 0;
+app.cameraTarget.quaternion.rotateTowards(targetQuaternion, 0.02);
