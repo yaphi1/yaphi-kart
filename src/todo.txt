@@ -25,3 +25,9 @@ targetQuaternion.copy(car.chassis.body.quaternion);
 targetQuaternion.x = 0;
 targetQuaternion.z = 0;
 app.cameraTarget.quaternion.rotateTowards(targetQuaternion, 0.02);
+
+
+avenues:
+https://github.com/pmndrs/cannon-es/blob/59d72ed/src/objects/RaycastVehicle.ts#L90
+- .steering
+- .sideImpulse

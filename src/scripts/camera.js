@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
+import appSettings from './appSettings.js';
 
 const cameraStartPosition = {
   x: 0,
@@ -23,10 +24,10 @@ export function createCamera(canvas, scene, sizes) {
   cameraTarget.add(cameraContainer);
   scene.add(cameraTarget);
 
-  // const orbitControls = new OrbitControls(camera, canvas);
-  // orbitControls.target.copy(cameraTarget.position);
+  const orbitControls = appSettings.orbitalCamera ? new OrbitControls(camera, canvas) : null;
+  orbitControls?.target.copy(cameraContainer.position);
 
-  return { camera, cameraTarget, orbitControls: null };
+  return { camera, cameraTarget, orbitControls };
 };
 
 export function updateCamera({ app, car }) {
@@ -41,8 +42,8 @@ export function updateCamera({ app, car }) {
   app.cameraTarget.quaternion.z = 0;
 
   // update orbital controls
-  // app.orbitControls.target.copy(app.cameraTarget.position);
-  // app.orbitControls.update();
+  app.orbitControls?.target.copy(app.cameraTarget.position);
+  app.orbitControls?.update();
 };
 
 export function animateCameraSteer({ app, car }) {
