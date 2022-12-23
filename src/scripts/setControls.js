@@ -31,8 +31,8 @@ export default function (car) {
   	},
   	brake: (isKeyDown) => {
       const force = isKeyDown ? carOptions.brakeForce : 0;
-  		car.vehicle.setBrake(force, 0);
-  		car.vehicle.setBrake(force, 1);
+  		car.vehicle.setBrake(force * 0.2, 0);
+  		car.vehicle.setBrake(force * 0.2, 1);
   		car.vehicle.setBrake(force, 2);
   		car.vehicle.setBrake(force, 3);
 

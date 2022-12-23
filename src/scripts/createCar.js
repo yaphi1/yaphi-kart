@@ -37,9 +37,9 @@ export default function (app) {
   };
 
   // Front wheels (left, then right)
-  options.chassisConnectionPointLocal.set(carOptions.axleWidth, 0, 0.9);
+  options.chassisConnectionPointLocal.set(carOptions.axleWidth, 0, 0.8);
   vehicle.addWheel(options);
-  options.chassisConnectionPointLocal.set(-carOptions.axleWidth, 0, 0.9);
+  options.chassisConnectionPointLocal.set(-carOptions.axleWidth, 0, 0.8);
   vehicle.addWheel(options);
 
   // Back wheels (left, then right)
