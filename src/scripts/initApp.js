@@ -9,6 +9,7 @@ import createGround from './createGround.js';
 import createWorld from './createWorld.js';
 import * as lil from 'lil-gui';
 import { gui } from './runDebug.js';
+import addScenery from './addScenery.js';
 
 export default function () {
   window.gui = gui;
@@ -28,6 +29,8 @@ export default function () {
   const world = createWorld();
   const objectsToUpdate = [];
   const ground = createGround(world, scene);
+
+  addScenery({ scene, world });
 
   const app = {
     canvas, world, scene, ground, objectsToUpdate, renderer, camera, cameraTarget, orbitControls, gui
