@@ -1,10 +1,8 @@
 
 - add shadows
 - add scenery and hazards
-- add more collision detection
 - try adding barriers to roads
-- finish car
 - add instructions, sound controls, and credits
 
-// touch grass
+// how to detect touching grass
 if car.vehicle.wheelInfos[0].raycastResult.body.id === 0, that's the grass

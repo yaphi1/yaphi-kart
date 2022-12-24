@@ -37,9 +37,11 @@ export function updateCamera({ app, car }) {
 	app.cameraTarget.position.z = car.chassis.mesh.position.z;
 
   // update rotation
-  app.cameraTarget.quaternion.copy(car.chassis.body.quaternion);
-  app.cameraTarget.quaternion.x = 0;
-  app.cameraTarget.quaternion.z = 0;
+  if (!appSettings.isCameraFixed) {
+    app.cameraTarget.quaternion.copy(car.chassis.body.quaternion);
+    app.cameraTarget.quaternion.x = 0;
+    app.cameraTarget.quaternion.z = 0;
+  }
 
   // update orbital controls
   app.orbitControls?.target.copy(app.cameraTarget.position);
@@ -48,12 +50,13 @@ export function updateCamera({ app, car }) {
 
 export function animateCameraSteer({ app, car }) {
   const cameraContainer = app.cameraTarget.children[0];
+  const cameraEndPosition = cameraStartPosition.z - Math.abs(car.state.turnDirection) * 0.5;
   gsap.to(cameraContainer.position, {
     x: car.state.turnDirection * 0.5,
     duration: 3,
   });
   gsap.to(app.camera.position, {
-    z: cameraStartPosition.z - Math.abs(car.state.turnDirection) * 0.5,
+    z: cameraEndPosition,
     duration: 3,
   });
 }

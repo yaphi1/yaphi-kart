@@ -50,4 +50,6 @@ export default function runDebug({ app, car }) {
   gui.add(audio, 'masterVolume').name('Volume').min(0).max(1).step(0.1).onChange(value => {
     audio.setMasterVolume(value);
   });
+
+  gui.add(appSettings, 'isCameraFixed').name('Fixed Camera');
 }

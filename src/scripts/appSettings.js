@@ -4,4 +4,5 @@ export default {
 	showDebugWheels: false,
 	showPhysicsDebugger: false,
 	orbitalCamera: false,
+	isCameraFixed: false,
 };
