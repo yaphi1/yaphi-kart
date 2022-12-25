@@ -52,4 +52,14 @@ export default function runDebug({ app, car }) {
   });
 
   gui.add(appSettings, 'isCameraFixed').name('Fixed Camera');
+
+  stopGuiFromBlockingKeyboardEvents(gui);
+}
+
+function stopGuiFromBlockingKeyboardEvents(gui) {
+  const canvas = document.querySelector('.webgl');
+  canvas.setAttribute('tabindex', '0');
+  gui.onChange(event => {
+    canvas.focus();
+  });
 }
