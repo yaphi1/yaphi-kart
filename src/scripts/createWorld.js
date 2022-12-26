@@ -13,7 +13,7 @@ export default function () {
     {
       friction: 0.9,
       restitution: 0,
-      contactEquationStiffness: 1000,
+      contactEquationStiffness: 10000,
     }
   );
   world.addContactMaterial(defaultContactMaterial);
