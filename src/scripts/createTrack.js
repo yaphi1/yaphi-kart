@@ -154,4 +154,27 @@ export default function createTrack({ app }) {
     ...nextTrackSettings,
     length: 8,
   });
+
+  addJumps({ app });
 };
+
+function addJumps({ app }) {
+  let rampSettings = {
+    app,
+    startPoint: { x: 0, z: 75 },
+    length: 8,
+    width: 8,
+    rotation: 0,
+    startHeight: 1,
+    endHeight: 2,
+  };
+
+  createTrackSegment(rampSettings);
+
+  createTrackSegment({
+    ...rampSettings,
+    startPoint: { x: 0, z: 175 },
+    startHeight: 2,
+    endHeight: 4,
+  });
+}
